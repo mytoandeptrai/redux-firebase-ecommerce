@@ -1,11 +1,14 @@
-import React from "react";
+import React, { Component } from "react";
+import SignUp from "../../components/SignUp";
 
-const Registration = () => {
-  return (
-    <div>
-      <h1>Registration Page</h1>
-    </div>
-  );
-};
+class Registration extends Component {
+  render() {
+    return (
+      <>
+        <SignUp />
+      </>
+    );
+  }
+}
 
 export default Registration;

@@ -14,6 +14,7 @@ export const signInWithGoogle = () => auth.signInWithPopup(GoogleProvider);
 
 //handleUserProfile
 export const handleUserProfile = async (userAuth, additionalData) => {
+  console.log(userAuth);
   if (!userAuth) return;
   const { uid } = userAuth;
   //check user in collection
