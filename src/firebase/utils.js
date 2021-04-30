@@ -19,6 +19,7 @@ export const handleUserProfile = async ({ userAuth, additionalData }) => {
   //check user in collection
   const userRef = firestore.doc(`users/${uid}`);
   const snapshot = await userRef.get();
+  const userRoles = ["user"];
   if (!snapshot.exists) {
     const { displayName, email } = userAuth;
     const timestamp = new Date();
@@ -26,6 +27,7 @@ export const handleUserProfile = async ({ userAuth, additionalData }) => {
       await userRef.set({
         displayName,
         email,
+        userRoles,
         createdAt: timestamp,
         ...additionalData,
       });

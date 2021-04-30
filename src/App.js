@@ -1,10 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
+import AdminToolBar from "./components/AdminToolBar";
 import "./default.scss";
+import WithAdminAuth from "./hoc/withAdminAuth";
 import WithAuth from "./hoc/withAuth";
 import HomepageLayout from "./Layouts/HomepageLayout";
 import MainLayout from "./Layouts/MainLayout";
+import Admin from "./pages/Admin";
 import Dashboard from "./pages/Dashboard";
 import Homepage from "./pages/Homepage";
 import Login from "./pages/Login";
@@ -42,6 +45,7 @@ const App = (props) => {
 
   return (
     <div className="App">
+      <AdminToolBar />
       <Switch>
         <Route
           exact
@@ -84,6 +88,16 @@ const App = (props) => {
                 <Dashboard />
               </MainLayout>
             </WithAuth>
+          )}
+        />
+        <Route
+          path="/admin"
+          render={() => (
+            <WithAdminAuth>
+              <MainLayout>
+                <Admin />
+              </MainLayout>
+            </WithAdminAuth>
           )}
         />
       </Switch>
