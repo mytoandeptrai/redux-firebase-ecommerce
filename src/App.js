@@ -5,6 +5,7 @@ import AdminToolBar from "./components/AdminToolBar";
 import "./default.scss";
 import WithAdminAuth from "./hoc/withAdminAuth";
 import WithAuth from "./hoc/withAuth";
+import AdminLayout from "./Layouts/AdminLayout";
 import HomepageLayout from "./Layouts/HomepageLayout";
 import MainLayout from "./Layouts/MainLayout";
 import Admin from "./pages/Admin";
@@ -94,9 +95,9 @@ const App = (props) => {
           path="/admin"
           render={() => (
             <WithAdminAuth>
-              <MainLayout>
+              <AdminLayout>
                 <Admin />
-              </MainLayout>
+              </AdminLayout>
             </WithAdminAuth>
           )}
         />
