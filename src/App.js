@@ -14,6 +14,7 @@ import Homepage from "./pages/Homepage";
 import Login from "./pages/Login";
 import Recovery from "./pages/Recovery";
 import Registration from "./pages/Registration";
+import Search from "./pages/Search";
 import { checkUserSession } from "./redux/User/user.actions";
 
 const App = (props) => {
@@ -55,6 +56,15 @@ const App = (props) => {
             <HomepageLayout>
               <Homepage />
             </HomepageLayout>
+          )}
+        />
+        <Route
+          exact
+          path="/search"
+          render={() => (
+            <MainLayout>
+              <Search />
+            </MainLayout>
           )}
         />
         <Route
