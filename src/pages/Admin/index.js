@@ -10,7 +10,7 @@ import FormInput from "./../../components/forms/FormInput";
 import FormSelect from "./../../components/forms/FormSelect";
 import Modal from "./../../components/Modal";
 import "./style.scss";
-
+import LoadMore from "../../components/LoadMore";
 const mapState = ({ productsData }) => ({
   products: productsData.products,
 });
@@ -23,6 +23,8 @@ const Admin = (props) => {
   const [productName, setProductName] = useState("");
   const [productThumbnail, setProductThumbnail] = useState("");
   const [productPrice, setProductPrice] = useState(0);
+
+  const { data, queryDoc, isLastPage } = products;
 
   const toggleModal = () => setHideModal(!hideModal);
 
@@ -53,6 +55,18 @@ const Admin = (props) => {
       })
     );
     resetForm();
+  };
+
+  const handleLoadMore = () => {
+    dispatch(
+      fetchProductsStart({
+        startAfterDoc: queryDoc,
+        persistProducts: data,
+      })
+    );
+  };
+  const configLoadMore = {
+    onLoadMoreEvt: handleLoadMore,
   };
 
   return (
@@ -133,38 +147,54 @@ const Admin = (props) => {
                   cellSpacing="0"
                 >
                   <tbody>
-                    {products.map((product, index) => {
-                      const {
-                        productName,
-                        productPrice,
-                        productThumbnail,
-                        documentId,
-                      } = product;
+                    {Array.isArray(data) &&
+                      data.length > 0 &&
+                      data.map((product, index) => {
+                        const {
+                          productName,
+                          productPrice,
+                          productThumbnail,
+                          documentId,
+                        } = product;
 
-                      return (
-                        <tr key={index}>
-                          <td>
-                            <img
-                              className="thumb"
-                              src={productThumbnail}
-                              width="150rem"
-                              alt="product"
-                            />
-                          </td>
-                          <td>{productName}</td>
-                          <td>£{productPrice}</td>
-                          <td>
-                            <Button
-                              onClick={() =>
-                                dispatch(deleteProducts(documentId))
-                              }
-                            >
-                              Delete
-                            </Button>
-                          </td>
-                        </tr>
-                      );
-                    })}
+                        return (
+                          <tr key={index}>
+                            <td>
+                              <img
+                                className="thumb"
+                                src={productThumbnail}
+                                width="150rem"
+                                alt="product"
+                              />
+                            </td>
+                            <td>{productName}</td>
+                            <td>£{productPrice}</td>
+                            <td>
+                              <Button
+                                onClick={() =>
+                                  dispatch(deleteProducts(documentId))
+                                }
+                              >
+                                Delete
+                              </Button>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+            </tr>
+            <tr>
+              <td>
+                <table border="0" cellPadding="10px" cellSpacing="0">
+                  <tbody>
+                    <tr>
+                      <td>{!isLastPage && <LoadMore {...configLoadMore} />}</td>
+                    </tr>
                   </tbody>
                 </table>
               </td>
