@@ -2,15 +2,17 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/logo.png";
+import { selecdCartItemsCount } from "../../redux/Cart/cart.selector";
 import { signOutUserStart } from "../../redux/User/user.actions";
 import "./style.scss";
 
-const mapState = ({ user }) => ({
-  currentUser: user.currentUser,
+const mapState = (state) => ({
+  currentUser: state.user.currentUser,
+  totalNumberCartItems: selecdCartItemsCount(state),
 });
 
 const Header = (props) => {
-  const { currentUser } = useSelector(mapState);
+  const { currentUser, totalNumberCartItems } = useSelector(mapState);
   const dispatch = useDispatch();
   const signOut = () => {
     dispatch(signOutUserStart());
@@ -27,36 +29,44 @@ const Header = (props) => {
         <nav>
           <ul>
             <li>
-              <Link to="/search">Search</Link>
+              <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/search">Search</Link>
             </li>
           </ul>
         </nav>
 
         <div className="callToActions">
-          {currentUser && (
-            <ul>
-              <li>
-                <Link to="/dashboard">My Account</Link>
-              </li>
-              <li>
-                {/* <span onClick={() => auth.signOut()}>LogOut</span> */}
-                <span onClick={() => signOut()}>LogOut</span>
-              </li>
-            </ul>
-          )}
-          {!currentUser && (
-            <ul>
-              <li>
-                <Link to="/registration">Register</Link>
-              </li>
-              <li>
-                <Link to="/login">Login</Link>
-              </li>
-            </ul>
-          )}
+          <ul>
+            <li>
+              <Link to="/cart">Your Cart {totalNumberCartItems}</Link>
+            </li>
+
+            {currentUser && (
+              <>
+                <li>
+                  <Link to="/dashboard">My Account</Link>
+                </li>
+                <li>
+                  {/* <span onClick={() => auth.signOut()}>LogOut</span> */}
+                  <span onClick={() => signOut()}>LogOut</span>
+                </li>
+              </>
+            )}
+          </ul>
+          <ul>
+            {!currentUser && (
+              <>
+                <li>
+                  <Link to="/registration">Register</Link>
+                </li>
+                <li>
+                  <Link to="/login">Login</Link>
+                </li>
+              </>
+            )}
+          </ul>
         </div>
       </div>
     </header>

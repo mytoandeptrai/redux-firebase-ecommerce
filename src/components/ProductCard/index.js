@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
+import { addProduct } from "../../redux/Cart/cart.actions";
 import {
   fetchProductsStart,
   fetchProductStart,
@@ -18,13 +19,17 @@ const ProductCard = () => {
   const { product } = useSelector(mapState);
   console.log(product);
   const { productName, productThumbnail, productPrice, productDesc } = product;
-  console.log(productDesc);
   useEffect(() => {
     dispatch(fetchProductStart(productID));
     return () => {
       dispatch(setProduct({}));
     };
   }, []);
+
+  const handleAddToCart = (product) => {
+    if (!product) return;
+    dispatch(addProduct(product));
+  };
 
   const configAddToCartBtn = {
     type: "button",
@@ -44,7 +49,13 @@ const ProductCard = () => {
           </li>
           <li>
             <div className="addToCart">
-              <Button {...configAddToCartBtn}>Add to Cart</Button>
+              <Button
+                {...configAddToCartBtn}
+                onClick={() => handleAddToCart(product)}
+              >
+                {" "}
+                Add to Cart
+              </Button>
             </div>
           </li>
           <li>
