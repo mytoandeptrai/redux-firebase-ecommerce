@@ -9,6 +9,7 @@ import AdminLayout from "./Layouts/AdminLayout";
 import HomepageLayout from "./Layouts/HomepageLayout";
 import MainLayout from "./Layouts/MainLayout";
 import Admin from "./pages/Admin";
+import Cart from "./pages/Cart";
 import Dashboard from "./pages/Dashboard";
 import Homepage from "./pages/Homepage";
 import Login from "./pages/Login";
@@ -81,6 +82,14 @@ const App = (props) => {
           render={() => (
             <MainLayout>
               <ProductDetails />
+            </MainLayout>
+          )}
+        />
+        <Route
+          path="/cart"
+          render={() => (
+            <MainLayout>
+              <Cart />
             </MainLayout>
           )}
         />
