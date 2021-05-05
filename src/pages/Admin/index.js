@@ -1,16 +1,17 @@
+import CKEditor from "ckeditor4-react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import LoadMore from "../../components/LoadMore";
 import {
   addProductStart,
   deleteProducts,
-  fetchProductsStart,
+  fetchProductsStart
 } from "../../redux/Products/products.action";
 import Button from "./../../components/forms/Button";
 import FormInput from "./../../components/forms/FormInput";
 import FormSelect from "./../../components/forms/FormSelect";
 import Modal from "./../../components/Modal";
 import "./style.scss";
-import LoadMore from "../../components/LoadMore";
 const mapState = ({ productsData }) => ({
   products: productsData.products,
 });
@@ -23,7 +24,7 @@ const Admin = (props) => {
   const [productName, setProductName] = useState("");
   const [productThumbnail, setProductThumbnail] = useState("");
   const [productPrice, setProductPrice] = useState(0);
-
+  const [productDesc, setProductDesc] = useState("");
   const { data, queryDoc, isLastPage } = products;
 
   const toggleModal = () => setHideModal(!hideModal);
@@ -43,6 +44,7 @@ const Admin = (props) => {
     setProductPrice(0);
     setProductThumbnail("");
     setHideModal(true);
+    setProductDesc("");
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -52,6 +54,7 @@ const Admin = (props) => {
         productName,
         productThumbnail,
         productPrice,
+        productDesc,
       })
     );
     resetForm();
@@ -121,6 +124,10 @@ const Admin = (props) => {
               step="0.01"
               value={productPrice}
               handleChange={(e) => setProductPrice(e.target.value)}
+            />
+
+            <CKEditor
+              onChange={(evt) => setProductDesc(evt.editor.getData())}
             />
 
             <br />
