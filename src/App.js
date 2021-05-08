@@ -6,6 +6,7 @@ import "./default.scss";
 import WithAdminAuth from "./hoc/withAdminAuth";
 import WithAuth from "./hoc/withAuth";
 import AdminLayout from "./Layouts/AdminLayout";
+import DashBoardLayout from "./Layouts/DashboardLayout";
 import HomepageLayout from "./Layouts/HomepageLayout";
 import MainLayout from "./Layouts/MainLayout";
 import Admin from "./pages/Admin";
@@ -13,6 +14,8 @@ import Cart from "./pages/Cart";
 import Dashboard from "./pages/Dashboard";
 import Homepage from "./pages/Homepage";
 import Login from "./pages/Login";
+import Order from "./pages/Order";
+import Payment from "./pages/Payment";
 import ProductDetails from "./pages/ProductDetails";
 import Recovery from "./pages/Recovery";
 import Registration from "./pages/Registration";
@@ -94,6 +97,16 @@ const App = (props) => {
           )}
         />
         <Route
+          path="/payment"
+          render={() => (
+            <WithAuth>
+              <MainLayout>
+                <Payment />
+              </MainLayout>
+            </WithAuth>
+          )}
+        />
+        <Route
           path="/registration"
           render={() => (
             <MainLayout>
@@ -121,9 +134,19 @@ const App = (props) => {
           path="/dashboard"
           render={() => (
             <WithAuth>
-              <MainLayout>
+              <DashBoardLayout>
                 <Dashboard />
-              </MainLayout>
+              </DashBoardLayout>
+            </WithAuth>
+          )}
+        />
+        <Route
+          path="/order/:orderID"
+          render={() => (
+            <WithAuth>
+              <DashBoardLayout>
+                <Order />
+              </DashBoardLayout>
             </WithAuth>
           )}
         />
