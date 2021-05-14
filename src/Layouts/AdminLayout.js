@@ -20,6 +20,9 @@ const AdminLayout = (props) => {
                 <Link to="/admin">Home</Link>
               </li>
               <li>
+                <Link to="/dashboard">Manage Orders</Link>
+              </li>
+              <li>
                 <span className="signOut" onClick={signOut}>
                   Sign Out
                 </span>

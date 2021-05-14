@@ -15,16 +15,8 @@ const UserProfile = (props) => {
       <ul>
         <li>
           <div className="img">
-            <img src={userIMG} />
+            <img src={userIMG} alt="admin" />
           </div>
-        </li>
-        <li>
-          <Link to="/dashboard">Home</Link>
-        </li>
-        <li>
-          <span className="signOut" onClick={() => signOut()}>
-            Sign Out
-          </span>
         </li>
       </ul>
     </div>

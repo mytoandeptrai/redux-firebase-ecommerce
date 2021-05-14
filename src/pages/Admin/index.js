@@ -1,11 +1,12 @@
 import CKEditor from "ckeditor4-react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 import LoadMore from "../../components/LoadMore";
 import {
   addProductStart,
   deleteProducts,
-  fetchProductsStart
+  fetchProductsStart,
 } from "../../redux/Products/products.action";
 import Button from "./../../components/forms/Button";
 import FormInput from "./../../components/forms/FormInput";
@@ -18,6 +19,7 @@ const mapState = ({ productsData }) => ({
 
 const Admin = (props) => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { products } = useSelector(mapState);
   const [hideModal, setHideModal] = useState(true);
   const [productCategory, setProductCategory] = useState("mens");
@@ -176,6 +178,15 @@ const Admin = (props) => {
                             </td>
                             <td>{productName}</td>
                             <td>£{productPrice}</td>
+                            <td>
+                              <Button
+                                onClick={() =>
+                                  history.push(`admin/${documentId}`)
+                                }
+                              >
+                                Edit
+                              </Button>
+                            </td>
                             <td>
                               <Button
                                 onClick={() =>

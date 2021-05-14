@@ -29,3 +29,8 @@ export const setProduct = (product) => ({
   type: productsTypes.SET_PRODUCT,
   payload: product,
 });
+
+export const editProductStart = (productData) => ({
+  type: productsTypes.EDIT_PRODUCT_START,
+  payload: productData,
+});

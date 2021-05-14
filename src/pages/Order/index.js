@@ -6,13 +6,17 @@ import { getOrderDetailsStart } from "./../../redux/Orders/order.actions";
 
 const mapState = ({ ordersData }) => ({
   orderDetails: ordersData.orderDetails,
+  orders: ordersData.orders,
 });
 
 const Order = () => {
   const { orderID } = useParams();
   const dispatch = useDispatch();
-  const { orderDetails } = useSelector(mapState);
-  const { orderTotal } = orderDetails;
+  const { orderDetails, orders } = useSelector(mapState);
+  const orderDetail = orders.filter((order) => order.documentId === orderID);
+  console.log(orderDetail);
+  console.log(orderDetails);
+  const { orderTotal } = orders;
   useEffect(() => {
     dispatch(getOrderDetailsStart(orderID));
   }, []);

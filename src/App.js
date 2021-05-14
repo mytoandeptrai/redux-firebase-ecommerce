@@ -17,6 +17,7 @@ import Login from "./pages/Login";
 import Order from "./pages/Order";
 import Payment from "./pages/Payment";
 import ProductDetails from "./pages/ProductDetails";
+import ProductEdits from "./pages/ProductEdit";
 import Recovery from "./pages/Recovery";
 import Registration from "./pages/Registration";
 import Search from "./pages/Search";
@@ -74,6 +75,14 @@ const App = (props) => {
         />
         <Route
           path="/search/:filterType"
+          render={() => (
+            <MainLayout>
+              <Search />
+            </MainLayout>
+          )}
+        />
+        <Route
+          path="/search/:searchProduct"
           render={() => (
             <MainLayout>
               <Search />
@@ -151,11 +160,23 @@ const App = (props) => {
           )}
         />
         <Route
+          exact
           path="/admin"
           render={() => (
             <WithAdminAuth>
               <AdminLayout>
                 <Admin />
+              </AdminLayout>
+            </WithAdminAuth>
+          )}
+        />
+        <Route
+          exact
+          path="/admin/:productID"
+          render={() => (
+            <WithAdminAuth>
+              <AdminLayout>
+                <ProductEdits />
               </AdminLayout>
             </WithAdminAuth>
           )}

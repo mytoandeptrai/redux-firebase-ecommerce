@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router";
 import { fetchProductsStart } from "../../redux/Products/products.action";
+import FormInput from "../forms/FormInput";
+import FormSelect from "../forms/FormSelect";
+import LoadMore from "../LoadMore";
 import Product from "./Product";
 import "./style.scss";
-import FormSelect from "../forms/FormSelect";
-import { useHistory, useParams } from "react-router";
-import LoadMore from "../LoadMore";
 const mapState = ({ productsData }) => ({
   products: productsData.products,
 });
@@ -13,10 +14,9 @@ const mapState = ({ productsData }) => ({
 const ProductResults = ({}) => {
   const dispatch = useDispatch();
   const { products } = useSelector(mapState);
-  console.log(products);
   const history = useHistory();
-  const { filterType } = useParams();
-
+  const { filterType, searchProduct } = useParams();
+  const [searchValue, setSearchValue] = useState();
   const { data, queryDoc, isLastPage } = products;
 
   useEffect(() => {
@@ -68,14 +68,46 @@ const ProductResults = ({}) => {
     onLoadMoreEvt: handleLoadMore,
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // history.push(`/search/${searchValue}`);
+    dispatch(
+      fetchProductsStart({
+        filterType,
+        searchProduct: searchValue,
+      })
+    );
+    setSearchValue("");
+  };
+
+  const handleSearchFilter = (value) => {
+    return value.filter((val) => {
+      if (searchValue === "") {
+        return val;
+      } else if (val.productName.match(searchValue)) {
+        return val;
+      }
+    });
+  };
+
   return (
     <div className="products">
       <h1>Browse Products</h1>
-
-      <FormSelect {...configFilters} handleChange={handleFilter} />
+      <div className="productActions">
+        <p>{data.length} products was found !</p>
+        <form onSubmit={handleSubmit}>
+          <FormInput
+            type="text"
+            value={searchValue}
+            placeholder="Search your product"
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
+        </form>
+        <FormSelect {...configFilters} handleChange={handleFilter} />
+      </div>
 
       <div className="productResults">
-        {data.map((product, pos) => {
+        {handleSearchFilter(data).map((product, pos) => {
           const { productThumbnail, productName, productPrice } = product;
           if (
             !productThumbnail ||

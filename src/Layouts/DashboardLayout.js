@@ -25,6 +25,9 @@ const DashBoardLayout = (props) => {
                 <Link to="/dashboard">Home</Link>
               </li>
               <li>
+                <Link to="/admin">Manage Products</Link>
+              </li>
+              <li>
                 <span className="signOut" onClick={() => signOut()}>
                   Sign Out
                 </span>

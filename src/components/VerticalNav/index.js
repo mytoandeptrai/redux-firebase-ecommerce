@@ -6,7 +6,7 @@ import "./style.scss";
 const mapState = ({ user }) => ({
   currentUser: user.currentUser,
 });
-const VerticalNav = () => {
+const VerticalNav = (props) => {
   const { currentUser } = useSelector(mapState);
   const configUserProfile = {
     currentUser,
@@ -14,7 +14,7 @@ const VerticalNav = () => {
   return (
     <div className="verticalNav">
       <UserProfile {...configUserProfile} />
-      <div className="menu">{children}</div>
+      <div className="menu">{props.children}</div>
     </div>
   );
 };

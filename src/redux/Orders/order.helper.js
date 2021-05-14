@@ -58,3 +58,56 @@ export const handleGetOrder = (orderID) => {
       });
   });
 };
+
+export const handleDeleteOrder = (orderID) => {
+  return new Promise((resolve, reject) => {
+    firestore
+      .collection("orders")
+      .doc(orderID)
+      .delete()
+      .then(() => {
+        resolve();
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};
+
+export const handleFetchOrder = () => {
+  return new Promise((resolve, reject) => {
+    firestore
+      .collection("orders")
+      .get()
+      .then((snapshot) => {
+        const ordersArray = snapshot.docs.map((doc) => {
+          return {
+            ...doc.data(),
+            documentId: doc.id,
+          };
+        });
+        resolve(ordersArray);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};
+
+export const handleUpdateOrderShipping = (orderID) => {
+  return new Promise((resolve, reject) => {
+    firestore
+      .collection("orders")
+      .doc(orderID)
+      .update({
+        orderFinished: true,
+      })
+      .then(() => {
+        resolve();
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};
+
