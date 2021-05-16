@@ -6,10 +6,10 @@ import { addProduct } from "../../../redux/Cart/cart.actions";
 const Product = (product) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { productThumbnail, productName, productPrice, documentId } = product;
+  const { productThumbnails, productName, productPrice, documentId } = product;
   if (
     !documentId ||
-    !productThumbnail ||
+    !productThumbnails ||
     !productName ||
     typeof productPrice === "undefined"
   )
@@ -26,7 +26,7 @@ const Product = (product) => {
     <div className="product">
       <div className="thumb">
         <Link to={`/product/${documentId}`}>
-          <img src={productThumbnail} alt={productName} />
+          <img src={productThumbnails[0]} alt={productName} />
         </Link>
       </div>
 

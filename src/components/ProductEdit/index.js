@@ -12,28 +12,41 @@ import FormSelect from "../forms/FormSelect";
 import "./style.scss";
 const mapState = (state) => ({
   product: state.productsData.product,
+  loadingDetail: state.productsData.loadingDetail,
 });
 const ProductEdit = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { productID } = useParams();
-  const { product } = useSelector(mapState);
+  const { product, loadingDetail } = useSelector(mapState);
   const { documentId } = product;
   const [productCategory, setProductCategory] = useState("");
   const [productName, setProductName] = useState();
-  const [productThumbnail, setProductThumbnail] = useState();
+  const [productThumbnail, setProductThumbnail] = useState("");
+  const [productThumbnail2, setProductThumbnail2] = useState("");
+  const [productThumbnail3, setProductThumbnail3] = useState("");
   const [productPrice, setProductPrice] = useState(0);
+  const [sizes, setSizes] = useState("");
   const [productDesc, setProductDesc] = useState();
   useEffect(() => {
     dispatch(fetchProductStart(productID));
   }, []);
 
+  const handleChecking = () => {
+    if (loadingDetail === false) {
+      setProductCategory(product.productCategory);
+      setProductName(product.productName);
+      setProductPrice(product.productPrice);
+      setProductThumbnail(product.productThumbnails[0]);
+      setProductThumbnail2(product.productThumbnails[1]);
+      setProductThumbnail3(product.productThumbnails[2]);
+      setSizes(product.productSizes.join(","));
+      setProductDesc(product.productDesc);
+    }
+  };
+
   useEffect(() => {
-    setProductCategory(product.productCategory);
-    setProductName(product.productName);
-    setProductPrice(product.productPrice);
-    setProductThumbnail(product.productThumbnail);
-    setProductDesc(product.productDesc);
+    handleChecking();
   }, [product]);
 
   const resetForm = () => {
@@ -50,6 +63,9 @@ const ProductEdit = () => {
         productCategory,
         productName,
         productThumbnail,
+        productThumbnail2,
+        productThumbnail3,
+        sizes,
         productPrice,
         productDesc,
         documentId,
@@ -61,56 +77,86 @@ const ProductEdit = () => {
 
   return (
     <>
-      <div className="addNewProductForm">
-        <form onSubmit={handleSubmit}>
-          <h2>Edit product</h2>
+      {loadingDetail === false ? (
+        <>
+          <div className="addNewProductForm">
+            <form onSubmit={handleSubmit}>
+              <h2>Edit product</h2>
 
-          <FormSelect
-            label="Category"
-            options={[
-              {
-                value: "mens",
-                name: "Mens",
-              },
-              {
-                value: "womens",
-                name: "Womens",
-              },
-            ]}
-            handleChange={(e) => setProductCategory(e.target.value)}
-          />
+              <FormSelect
+                label="Category"
+                options={[
+                  {
+                    value: "mens",
+                    name: "Mens",
+                  },
+                  {
+                    value: "womens",
+                    name: "Womens",
+                  },
+                ]}
+                handleChange={(e) => setProductCategory(e.target.value)}
+              />
 
-          <FormInput
-            label="Name"
-            type="text"
-            value={productName}
-            handleChange={(e) => setProductName(e.target.value)}
-          />
+              <FormInput
+                label="Name"
+                type="text"
+                value={productName}
+                handleChange={(e) => setProductName(e.target.value)}
+              />
 
-          <FormInput
-            label="Main image URL"
-            type="url"
-            value={productThumbnail}
-            handleChange={(e) => setProductThumbnail(e.target.value)}
-          />
+              <FormInput
+                label="Main image URL"
+                type="url"
+                value={productThumbnail}
+                handleChange={(e) => setProductThumbnail(e.target.value)}
+              />
 
-          <FormInput
-            label="Price"
-            type="number"
-            min="0.00"
-            max="10000.00"
-            step="0.01"
-            value={productPrice}
-            handleChange={(e) => setProductPrice(e.target.value)}
-          />
+              <FormInput
+                label="Second image URL"
+                type="url"
+                value={productThumbnail2}
+                handleChange={(e) => setProductThumbnail2(e.target.value)}
+              />
 
-          <CKEditor onChange={(evt) => setProductDesc(evt.editor.getData())} />
+              <FormInput
+                label="Third image URL"
+                type="url"
+                value={productThumbnail3}
+                handleChange={(e) => setProductThumbnail3(e.target.value)}
+              />
 
-          <br />
+              <FormInput
+                label="Size"
+                type="text"
+                value={sizes}
+                handleChange={(e) => setSizes(e.target.value)}
+              />
 
-          <Button type="submit">Save</Button>
-        </form>
-      </div>
+              <FormInput
+                label="Price"
+                type="number"
+                min="0.00"
+                max="10000.00"
+                step="0.01"
+                value={productPrice}
+                handleChange={(e) => setProductPrice(e.target.value)}
+              />
+
+              <CKEditor
+                data={productDesc}
+                onChange={(evt) => setProductDesc(evt.editor.getData())}
+              />
+
+              <br />
+
+              <Button type="submit">Save</Button>
+            </form>
+          </div>{" "}
+        </>
+      ) : (
+        <> loading product </>
+      )}
     </>
   );
 };

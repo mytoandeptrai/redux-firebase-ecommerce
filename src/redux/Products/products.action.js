@@ -34,3 +34,7 @@ export const editProductStart = (productData) => ({
   type: productsTypes.EDIT_PRODUCT_START,
   payload: productData,
 });
+
+export const productDetailSucces = () => ({
+  type: productsTypes.PRODUCT_DETAIL_SUCCESS,
+});

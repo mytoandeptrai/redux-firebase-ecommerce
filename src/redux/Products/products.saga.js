@@ -1,6 +1,11 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import { auth } from "../../firebase/utils";
-import { fetchProductsStart, setProduct, setProducts } from "./products.action";
+import {
+  fetchProductsStart,
+  productDetailSucces,
+  setProduct,
+  setProducts,
+} from "./products.action";
 import {
   handleAddProduct,
   handleDeleteProduct,
@@ -60,6 +65,7 @@ export function* fetchProducts({ payload }) {
   try {
     const product = yield handleFetchProducts(payload);
     yield put(setProduct(product));
+    yield put(productDetailSucces());
   } catch (error) {
     console.log(error);
   }

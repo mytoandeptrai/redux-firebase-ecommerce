@@ -10,8 +10,8 @@ export const handleSaveOrder = (order) => {
       .then(() => {
         resolve();
       })
-      .catch((err) => {
-        reject(err);
+      .catch((error) => {
+        reject(error);
       });
   });
 };
@@ -110,4 +110,3 @@ export const handleUpdateOrderShipping = (orderID) => {
       });
   });
 };
-

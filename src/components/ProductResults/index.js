@@ -108,9 +108,9 @@ const ProductResults = ({}) => {
 
       <div className="productResults">
         {handleSearchFilter(data).map((product, pos) => {
-          const { productThumbnail, productName, productPrice } = product;
+          const { productThumbnails, productName, productPrice } = product;
           if (
-            !productThumbnail ||
+            !productThumbnails ||
             !productName ||
             typeof productPrice === "undefined"
           )

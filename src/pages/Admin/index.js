@@ -25,6 +25,9 @@ const Admin = (props) => {
   const [productCategory, setProductCategory] = useState("mens");
   const [productName, setProductName] = useState("");
   const [productThumbnail, setProductThumbnail] = useState("");
+  const [productThumbnail2, setProductThumbnail2] = useState("");
+  const [productThumbnail3, setProductThumbnail3] = useState("");
+  const [size, setSize] = useState("");
   const [productPrice, setProductPrice] = useState(0);
   const [productDesc, setProductDesc] = useState("");
   const { data, queryDoc, isLastPage } = products;
@@ -45,6 +48,9 @@ const Admin = (props) => {
     setProductName("");
     setProductPrice(0);
     setProductThumbnail("");
+    setProductThumbnail2("");
+    setProductThumbnail3("");
+    setSize("");
     setHideModal(true);
     setProductDesc("");
   };
@@ -54,7 +60,13 @@ const Admin = (props) => {
       addProductStart({
         productCategory,
         productName,
-        productThumbnail,
+        productThumbnails: [
+          productThumbnail,
+          productThumbnail2,
+          productThumbnail3,
+        ],
+        productSizes: size.split(","),
+        count: 1,
         productPrice,
         productDesc,
       })
@@ -119,6 +131,27 @@ const Admin = (props) => {
             />
 
             <FormInput
+              label="Second main image URL"
+              type="url"
+              value={productThumbnail2}
+              handleChange={(e) => setProductThumbnail2(e.target.value)}
+            />
+
+            <FormInput
+              label="Third main image URL"
+              type="url"
+              value={productThumbnail3}
+              handleChange={(e) => setProductThumbnail3(e.target.value)}
+            />
+
+            <FormInput
+              label="Enter sizes with `,` between them"
+              type="text"
+              value={size}
+              handleChange={(e) => setSize(e.target.value)}
+            />
+
+            <FormInput
               label="Price"
               type="number"
               min="0.00"
@@ -162,7 +195,7 @@ const Admin = (props) => {
                         const {
                           productName,
                           productPrice,
-                          productThumbnail,
+                          productThumbnails,
                           documentId,
                         } = product;
 
@@ -171,7 +204,7 @@ const Admin = (props) => {
                             <td>
                               <img
                                 className="thumb"
-                                src={productThumbnail}
+                                src={productThumbnails[0]}
                                 width="150rem"
                                 alt="product"
                               />

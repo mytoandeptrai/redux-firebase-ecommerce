@@ -6,7 +6,7 @@ import { createStructuredSelector } from "reselect";
 import {
   selecdCartItemsCount,
   selectCartItems,
-  selectCartTotal
+  selectCartTotal,
 } from "../../redux/Cart/cart.selector";
 import { saveOrderHistory } from "../../redux/Orders/order.actions";
 import Button from "../forms/Button/index";
@@ -71,23 +71,26 @@ const PaymentDetails = () => {
         orderItems: cartItems.map((item) => {
           const {
             documentId,
-            productThumbnail,
+            productThumbnails,
             productName,
             productPrice,
             quantity,
+            size,
           } = item;
           return {
             documentId,
-            productThumbnail,
+            productThumbnails,
             productName,
             productPrice,
             quantity,
+            size,
           };
         }),
         shipping: shippingAddress,
         orderFinished: false,
       };
       dispatch(saveOrderHistory(configOrder));
+      console.log(configOrder);
     } else {
       if (
         !recipientName ||
@@ -109,17 +112,19 @@ const PaymentDetails = () => {
         orderItems: cartItems.map((item) => {
           const {
             documentId,
-            productThumbnail,
+            productThumbnails,
             productName,
             productPrice,
             quantity,
+            size,
           } = item;
           return {
             documentId,
-            productThumbnail,
+            productThumbnails,
             productName,
             productPrice,
             quantity,
+            size,
           };
         }),
         shipping: formValue,

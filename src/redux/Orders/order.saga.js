@@ -36,7 +36,6 @@ export function* onGetUserOrderHistoryStart() {
 }
 
 export function* saveOrder({ payload }) {
-  console.log(payload);
   try {
     const timestamps = new Date().toDateString();
     yield handleSaveOrder({

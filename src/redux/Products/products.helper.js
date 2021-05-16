@@ -103,6 +103,9 @@ export const handleEditedProduct = (product) => {
     productDesc,
     productPrice,
     productThumbnail,
+    productThumbnail2,
+    productThumbnail3,
+    sizes,
     productName,
   } = product;
   return new Promise((resolve, reject) => {
@@ -113,7 +116,12 @@ export const handleEditedProduct = (product) => {
         productCategory: productCategory,
         productDesc: productDesc,
         productPrice: productPrice,
-        productThumbnail: productThumbnail,
+        productThumbnails: [
+          productThumbnail,
+          productThumbnail2,
+          productThumbnail3,
+        ],
+        productSizes: sizes.split(","),
         productName: productName,
       })
       .then(() => {

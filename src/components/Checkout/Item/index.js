@@ -9,10 +9,11 @@ import {
 const Item = (product) => {
   const {
     productName,
-    productThumbnail,
+    productThumbnails,
     productPrice,
     quantity,
     documentId,
+    size,
   } = product;
   const dispatch = useDispatch();
   const handleRemoveCartItem = (documentId) => {
@@ -33,7 +34,7 @@ const Item = (product) => {
       <tbody>
         <tr>
           <td>
-            <img src={productThumbnail} alt={productName} />
+            <img src={productThumbnails[0]} alt={productName} />
           </td>
           <td>{productName}</td>
           <td className="cartBtn">
@@ -42,6 +43,7 @@ const Item = (product) => {
             <span onClick={() => handleAddProduct(product)}>{` >`}</span>
           </td>
           <td>${productPrice}</td>
+          <td>{size}</td>
           <td align="center">
             <span
               className="cartBtns"

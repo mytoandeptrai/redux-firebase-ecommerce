@@ -41,6 +41,7 @@ const Checkout = ({}) => {
                         <th>Description</th>
                         <th>Quantity</th>
                         <th>Price</th>
+                        <th>Size</th>
                         <th>Remove</th>
                       </tr>
                     </tbody>

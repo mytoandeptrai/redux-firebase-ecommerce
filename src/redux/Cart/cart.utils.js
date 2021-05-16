@@ -23,6 +23,7 @@ export const handleAddToCart = ({ prevCartItems, nextCartItems }) => {
     {
       ...nextCartItems,
       quantity: quantityIncrement,
+      size: "L",
     },
   ];
 };
