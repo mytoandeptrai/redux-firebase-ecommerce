@@ -5,3 +5,7 @@ export const checkUserIsAdmin = (currentUser) => {
 
   return false;
 };
+
+export default function formatCurrency(number) {
+  return "$" + Number(number.toFixed(1).toLocaleString()) + " ";
+}

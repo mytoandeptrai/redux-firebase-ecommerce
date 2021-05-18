@@ -1,24 +1,25 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import "./style.scss";
-import {
-  selectCartItems,
-  selectCartTotal,
-} from "../../redux/Cart/cart.selector";
-import { createStructuredSelector } from "reselect";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
+import formatCurrency from "../../Utils";
 import Button from "../forms/Button/index";
 import Item from "./Item";
-import { useHistory } from "react-router";
-const mapState = createStructuredSelector({
-  cartItems: selectCartItems,
-  total: selectCartTotal,
+import "./style.scss";
+
+const mapState = (state) => ({
+  cartItems: state.cartData.cartItems,
 });
-// const mapState = state => state.cartData.cartItems
 
 const Checkout = ({}) => {
   const history = useHistory();
-  const { cartItems, total } = useSelector(mapState);
-  console.log(cartItems);
+  const { cartItems } = useSelector(mapState);
+  const itemPrice = cartItems.reduce(
+    (a, c) => a + c.productPrice * c.quantity,
+    0
+  );
+  const taxPrice = itemPrice * 0.14;
+  const shippingPrice = itemPrice > 2000 ? 0 : 50;
+  const totalPrice = itemPrice + taxPrice + shippingPrice;
   const errMsg = "You have no items in your cart";
   return (
     <div className="checkout">
@@ -73,7 +74,7 @@ const Checkout = ({}) => {
                   >
                     <tr algin="right">
                       <td>
-                        <h3>Total:${total}</h3>
+                        <h3>Total : {formatCurrency(totalPrice)}</h3>
                       </td>
                     </tr>
                     <tr>

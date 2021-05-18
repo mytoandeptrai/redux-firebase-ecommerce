@@ -11,6 +11,7 @@ import HomepageLayout from "./Layouts/HomepageLayout";
 import MainLayout from "./Layouts/MainLayout";
 import Admin from "./pages/Admin";
 import Cart from "./pages/Cart";
+import ContactPage from "./pages/Contact";
 import Dashboard from "./pages/Dashboard";
 import Homepage from "./pages/Homepage";
 import Login from "./pages/Login";
@@ -147,6 +148,14 @@ const App = (props) => {
                 <Dashboard />
               </DashBoardLayout>
             </WithAuth>
+          )}
+        />
+        <Route
+          path="/contact"
+          render={() => (
+            <MainLayout>
+              <ContactPage />
+            </MainLayout>
           )}
         />
         <Route

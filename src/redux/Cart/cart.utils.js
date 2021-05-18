@@ -7,6 +7,7 @@ export const existingCartItem = ({ prevCartItems, nextCartItems }) => {
 export const handleAddToCart = ({ prevCartItems, nextCartItems }) => {
   const quantityIncrement = 1;
   const cartItemExisting = existingCartItem({ prevCartItems, nextCartItems });
+
   if (cartItemExisting) {
     return prevCartItems.map((cartItem) =>
       cartItem.documentId === nextCartItems.documentId
@@ -18,7 +19,7 @@ export const handleAddToCart = ({ prevCartItems, nextCartItems }) => {
     );
   }
 
-  return [
+  const newCartItem = [
     ...prevCartItems,
     {
       ...nextCartItems,
@@ -26,12 +27,38 @@ export const handleAddToCart = ({ prevCartItems, nextCartItems }) => {
       size: "L",
     },
   ];
+  localStorage.setItem("cartItems", JSON.stringify(newCartItem));
+  return newCartItem;
+};
+
+export const handleAddToCartFromDetail = ({ prevCartItems, nextCartItems }) => {
+  const cartItemExisting = existingCartItem({ prevCartItems, nextCartItems });
+  if (cartItemExisting) {
+    return prevCartItems.map((cartItem) =>
+      cartItem.documentId === nextCartItems.documentId
+        ? {
+            ...cartItem,
+            quantity: cartItem.quantity + nextCartItems.quantity,
+          }
+        : cartItem
+    );
+  }
+  return [
+    ...prevCartItems,
+    {
+      ...nextCartItems.product,
+      quantity: nextCartItems.quantity,
+      size: nextCartItems.size,
+    },
+  ];
 };
 
 export const handleRemoveCartItem = ({ prevCartItems, cartItemToRemove }) => {
-  return prevCartItems.filter(
+  const newCartItem = prevCartItems.filter(
     (item) => item.documentId !== cartItemToRemove.documentId
   );
+  localStorage.setItem("cartItems", JSON.stringify(newCartItem));
+  return newCartItem;
 };
 
 export const handleReduceCartItem = ({ prevCartItems, cartItemToReduce }) => {
@@ -44,7 +71,7 @@ export const handleReduceCartItem = ({ prevCartItems, cartItemToReduce }) => {
     );
   }
 
-  return prevCartItems.map((cartItem) =>
+  const newCartItem = prevCartItems.map((cartItem) =>
     cartItem.documentId === existingCartItem.documentId
       ? {
           ...cartItem,
@@ -52,4 +79,6 @@ export const handleReduceCartItem = ({ prevCartItems, cartItemToReduce }) => {
         }
       : cartItem
   );
+  localStorage.setItem("cartItems", JSON.stringify(newCartItem));
+  return newCartItem;
 };

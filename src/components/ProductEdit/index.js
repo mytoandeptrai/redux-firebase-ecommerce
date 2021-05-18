@@ -28,11 +28,14 @@ const ProductEdit = () => {
   const [productPrice, setProductPrice] = useState(0);
   const [sizes, setSizes] = useState("");
   const [productDesc, setProductDesc] = useState();
+
   useEffect(() => {
     dispatch(fetchProductStart(productID));
   }, []);
 
-  const handleChecking = () => {
+  console.log(loadingDetail);
+
+  useEffect(() => {
     if (loadingDetail === false) {
       setProductCategory(product.productCategory);
       setProductName(product.productName);
@@ -43,11 +46,15 @@ const ProductEdit = () => {
       setSizes(product.productSizes.join(","));
       setProductDesc(product.productDesc);
     }
-  };
-
-  useEffect(() => {
-    handleChecking();
   }, [product]);
+
+  // useEffect(() => {
+  //   if(!product){
+  //     return;
+  //   }else{
+  //     //...
+  //   }
+  // },[product])
 
   const resetForm = () => {
     setProductCategory("mens");

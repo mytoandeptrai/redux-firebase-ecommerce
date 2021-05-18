@@ -2,17 +2,20 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/logo.png";
-import { selecdCartItemsCount } from "../../redux/Cart/cart.selector";
+// import { selecdCartItemsCount } from "../../redux/Cart/cart.selector";
 import { signOutUserStart } from "../../redux/User/user.actions";
 import "./style.scss";
 
 const mapState = (state) => ({
   currentUser: state.user.currentUser,
-  totalNumberCartItems: selecdCartItemsCount(state),
+  // totalNumberCartItems: selecdCartItemsCount(state),
 });
 
 const Header = (props) => {
-  const { currentUser, totalNumberCartItems } = useSelector(mapState);
+  const {
+    currentUser,
+    // totalNumberCartItems
+  } = useSelector(mapState);
   const dispatch = useDispatch();
   const signOut = () => {
     dispatch(signOutUserStart());
@@ -34,13 +37,19 @@ const Header = (props) => {
             <li>
               <Link to="/search">Search</Link>
             </li>
+            <li>
+              <Link to="/contact">Contact</Link>
+            </li>
           </ul>
         </nav>
 
         <div className="callToActions">
           <ul>
             <li>
-              <Link to="/cart">Your Cart {totalNumberCartItems}</Link>
+              <Link to="/cart">
+                Your Cart
+                {/* {totalNumberCartItems} */}
+              </Link>
             </li>
 
             {currentUser && (

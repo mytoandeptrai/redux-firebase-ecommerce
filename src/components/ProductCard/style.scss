@@ -62,12 +62,23 @@
       margin-bottom: 1.5rem;
     }
     .productSize {
+      // input {
+      //   width: 40px;
+      //   height: 40px;
+      //   border: 1px solid #333;
+      //   outline: none;
+      //   margin-right: 5px;
+      //   cursor: pointer;
+      // }
+    }
+    .productActions {
+      display: flex;
       button {
-        width: 40px;
-        height: 40px;
+        width: 3rem;
+        height: 3rem;
         border: 1px solid #333;
         outline: none;
-        margin-right: 5px;
+        margin: 0 1.5rem;
         cursor: pointer;
       }
     }
@@ -103,4 +114,8 @@
       }
     }
   }
+}
+.active {
+  background: red;
+  color: white;
 }

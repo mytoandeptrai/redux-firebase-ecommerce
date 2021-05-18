@@ -1,24 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { CountryDropdown } from "react-country-region-selector";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { createStructuredSelector } from "reselect";
-import {
-  selecdCartItemsCount,
-  selectCartItems,
-  selectCartTotal,
-} from "../../redux/Cart/cart.selector";
 import { saveOrderHistory } from "../../redux/Orders/order.actions";
 import Button from "../forms/Button/index";
 import FormInput from "../forms/FormInput";
 import "./style.scss";
-const mapState = createStructuredSelector({
-  cartItems: selectCartItems,
-  total: selectCartTotal,
-  itemCount: selecdCartItemsCount,
+const mapState = (state) => ({
+  cartItems: state.cartData.cartItems,
 });
 const PaymentDetails = () => {
-  const { cartItems, total, itemCount } = useSelector(mapState);
+  const { cartItems } = useSelector(mapState);
+  const itemPrice = cartItems.reduce(
+    (a, c) => a + c.productPrice * c.quantity,
+    0
+  );
+  const taxPrice = itemPrice * 0.14;
+  const shippingPrice = itemPrice > 2000 ? 0 : 50;
+  const totalPrice = itemPrice + taxPrice + shippingPrice;
   const dispatch = useDispatch();
   const history = useHistory();
   const [billingAddress, setBillingAddress] = useState({
@@ -67,7 +66,7 @@ const PaymentDetails = () => {
       )
         return;
       const configOrder = {
-        orderTotal: total,
+        orderTotal: totalPrice,
         orderItems: cartItems.map((item) => {
           const {
             documentId,
@@ -108,7 +107,7 @@ const PaymentDetails = () => {
         return;
       const formValue = { ...shippingAddress, ...billingAddress };
       const configOrder = {
-        orderTotal: total,
+        ordertotalPrice: totalPrice,
         orderItems: cartItems.map((item) => {
           const {
             documentId,
@@ -134,11 +133,11 @@ const PaymentDetails = () => {
     }
   };
 
-  useEffect(() => {
-    if (itemCount < 1) {
-      history.push("/");
-    }
-  }, [itemCount]);
+  // useEffect(() => {
+  //   if (itemCount < 1) {
+  //     history.push("/");
+  //   }
+  // }, [itemCount]);
 
   return (
     <div className="paymentDetails">

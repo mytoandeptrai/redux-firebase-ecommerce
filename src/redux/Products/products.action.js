@@ -38,3 +38,8 @@ export const editProductStart = (productData) => ({
 export const productDetailSucces = () => ({
   type: productsTypes.PRODUCT_DETAIL_SUCCESS,
 });
+
+export const sortProductByPrice = (productSize) => ({
+  type: productsTypes.PRODUCT_SORT_BY_SIZE,
+  payload: productSize,
+});

@@ -13,10 +13,4 @@ export const rootReducer = combineReducers({
   ordersData: ordersReducer,
 });
 
-const configStorage = {
-  key: "root",
-  storage,
-  whitelist: ["cartData"],
-};
-
-export default persistReducer(configStorage, rootReducer);
+export default rootReducer;

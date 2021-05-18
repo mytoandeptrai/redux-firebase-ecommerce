@@ -1,12 +1,14 @@
 import cartTypes from "./cart.types";
 import {
   handleAddToCart,
+  handleAddToCartFromDetail,
   handleReduceCartItem,
   handleRemoveCartItem,
 } from "./cart.utils";
 
 const INITIAL_STATE = {
-  cartItems: [],
+  cartItems: JSON.parse(localStorage.getItem("cartItems") || []),
+  totalPrice: 0,
 };
 
 const cartReducer = (state = INITIAL_STATE, action) => {
@@ -19,6 +21,7 @@ const cartReducer = (state = INITIAL_STATE, action) => {
           nextCartItems: action.payload,
         }),
       };
+
     case cartTypes.REDUCE_CART_ITEM:
       return {
         ...state,
@@ -40,6 +43,15 @@ const cartReducer = (state = INITIAL_STATE, action) => {
         ...state,
         ...INITIAL_STATE,
       };
+
+    // case cartTypes.ADD_TO_CART_FROM_DETAIL:
+    //   return {
+    //     ...state,
+    //     cartItems: handleAddToCartFromDetail({
+    //       prevCartItems: state.cartItems,
+    //       nextCartItems: action.payload,
+    //     }),
+    //   };
     default:
       return state;
   }

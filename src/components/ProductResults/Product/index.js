@@ -19,8 +19,9 @@ const Product = (product) => {
   };
   const handleAddToCart = (product) => {
     if (!product) return;
+    console.log(product);
     dispatch(addProduct(product));
-    history.push("/cart");
+    // history.push("/cart");
   };
   return (
     <div className="product">

@@ -1,10 +1,14 @@
 import React, { createRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
-import { addProduct } from "../../redux/Cart/cart.actions";
+import {
+  addProduct,
+  addProductFromDetail,
+} from "../../redux/Cart/cart.actions";
 import {
   fetchProductsStart,
   fetchProductStart,
+  productDetailSucces,
   setProduct,
 } from "../../redux/Products/products.action";
 import Button from "../forms/Button";
@@ -24,6 +28,12 @@ const ProductCard = () => {
   const { productName, productPrice, productDesc, productCount } = product;
   const myRef = createRef();
   const [index, setIndex] = useState(0);
+  const [formValue, setFormValue] = useState({
+    quantity: 1,
+    size: "",
+    product: {},
+  });
+
   useEffect(() => {
     dispatch(fetchProductStart(productID));
     return () => {
@@ -31,12 +41,54 @@ const ProductCard = () => {
     };
   }, []);
 
+  const handleAddClick = () => {
+    setFormValue({
+      ...formValue,
+      quantity: formValue.quantity + 1,
+    });
+  };
+
+  const handleRemoveClick = () => {
+    if (formValue.quantity <= 1) {
+      return;
+    } else {
+      setFormValue({
+        ...formValue,
+        quantity: formValue.quantity - 1,
+      });
+    }
+  };
+
   const handleAddToCart = (product) => {
     if (!product) return;
     dispatch(addProduct(product));
     history.push("/cart");
   };
 
+  const resetForm = () => {
+    setFormValue({
+      quantity: 1,
+      size: "",
+      product: {},
+    });
+  };
+
+  const handleAddToCartFromDetail = (product) => {
+    // if (!formValue.size || !formValue.size.quantity) return;
+    // if (!product) return;
+    const newValue = { ...formValue, product };
+    console.log(newValue);
+    dispatch(addProductFromDetail(newValue));
+    history.push("/cart");
+    resetForm();
+  };
+
+  const handleChange = (e) => {
+    setFormValue({
+      ...formValue,
+      [e.target.name]: e.target.value,
+    });
+  };
   const handleTab = (index) => {
     setIndex(index);
     const images = myRef.current.children;
@@ -63,14 +115,24 @@ const ProductCard = () => {
                 <h2>{productName}</h2>
                 <span>${productPrice}</span>
               </div>
-              <ProductSize productSizes={product.productSizes} />
+              <div className="productSize">
+                {product.productSizes.map((size, index) => (
+                  <ProductSize
+                    sizeValue={formValue.size}
+                    size={size}
+                    handleChange={handleChange}
+                  />
+                ))}
+              </div>
               {productDesc ? (
                 <span dangerouslySetInnerHTML={{ __html: productDesc }} />
               ) : (
                 ""
               )}
-              <div className="productAction">
-                <p>Count: {productCount}</p>
+              <div className="productActions">
+                <button onClick={handleRemoveClick}>-</button>
+                {formValue.quantity}
+                <button onClick={handleAddClick}>+</button>
               </div>
               <ProductThumb
                 myRef={myRef}
@@ -78,9 +140,16 @@ const ProductCard = () => {
                 handleTab={handleTab}
               />
               <div className="addToCart">
-                <Button
+                {/* <Button
                   {...configAddToCartBtn}
                   onClick={() => handleAddToCart(product)}
+                >
+                  {" "}
+                  Add to Cart
+                </Button> */}
+                <Button
+                  {...configAddToCartBtn}
+                  onClick={() => handleAddToCartFromDetail(product)}
                 >
                   {" "}
                   Add to Cart

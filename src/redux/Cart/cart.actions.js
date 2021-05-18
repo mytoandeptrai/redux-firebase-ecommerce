@@ -18,3 +18,13 @@ export const reduceCartItem = (cartItem) => ({
 export const clearCart = () => ({
   type: cartTypes.CLEAR_CART,
 });
+
+export const addProductFromDetail = (nextCartItem) => ({
+  type: cartTypes.ADD_TO_CART_FROM_DETAIL,
+  payload: nextCartItem,
+});
+
+export const getTotalPrice = (totalPrice) => ({
+  type: cartTypes.GET_TOTAL_PRICE,
+  payload: totalPrice,
+});

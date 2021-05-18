@@ -22,6 +22,10 @@ const productsReducer = (state = INITIAL_STATE, action) => {
         ...state,
         loadingDetail: false,
       };
+    // case productsTypes.PRODUCT_SORT_BY_SIZE:
+    //   return {
+    //     ...state,
+    //   }
     default:
       return state;
   }

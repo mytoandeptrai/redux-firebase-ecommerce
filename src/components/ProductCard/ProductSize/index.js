@@ -1,12 +1,18 @@
 import React from "react";
 
-const ProductSize = ({ productSizes }) => {
+const ProductSize = ({ size, sizeValue, handleChange }) => {
   return (
-    <div className="productSize">
-      {productSizes.map((size, index) => (
-        <button>{size}</button>
-      ))}
-    </div>
+    <>
+      <input
+        type="radio"
+        name="size"
+        value={size}
+        checked={sizeValue === size}
+        onChange={handleChange}
+        id="inputValue"
+      />
+      {size}
+    </>
   );
 };
 
