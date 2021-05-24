@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/logo.png";
+import { clearCart } from "../../redux/Cart/cart.actions";
 // import { selecdCartItemsCount } from "../../redux/Cart/cart.selector";
 import { signOutUserStart } from "../../redux/User/user.actions";
 import "./style.scss";
@@ -43,11 +44,7 @@ const Header = (props) => {
         <div className="callToActions">
           <ul>
             <li>
-              <Link to="/cart">
-                Your Cart
-                {" "}
-                {cartItems.length}
-              </Link>
+              <Link to="/cart">Your Cart {cartItems.length}</Link>
             </li>
 
             {currentUser && (

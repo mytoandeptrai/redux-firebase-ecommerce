@@ -58,14 +58,6 @@ const OrderHistory = ({ orders }) => {
         <Table>
           <TableHead>
             <TableRow>
-              {/* {columns.map((column, pos) => {
-                const { label } = column;
-                return (
-                  <TableCell key={pos} style={styles}>
-                    {label}
-                  </TableCell>
-                );
-              })} */}
               <TableCell style={styles}>Order Date</TableCell>
               <TableCell style={styles}>Order ID</TableCell>
               <TableCell style={styles}>Amount</TableCell>
@@ -73,39 +65,6 @@ const OrderHistory = ({ orders }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {/* {Array.isArray(orders) &&
-              orders.length > 0 &&
-              orders.map((row, pos) => {
-                const { documentId } = row;
-                return (
-                  <TableRow
-                    key={pos}
-                    onClick={() => history.push(`/order/${documentId}`)}
-                  >
-                    {columns.map((column, pos) => {
-                      const columnName = column.id;
-                      const columnValue = row[columnName];
-                      const formattedText = formatText(columnName, columnValue);
-                      return (
-                        <>
-                          <TableCell key={pos} style={styles}>
-                            {formattedText}
-                          </TableCell>
-                        </>
-                      );
-                    })}
-
-                    <TableCell style={styles}>
-                      <Button style={{ marginBottom: "5px" }}>OK</Button>
-                      <Button
-                        onClick={() => dispatch(deleteOrders(documentId))}
-                      >
-                        Delete
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                );
-              })} */}
             {Array.isArray(orders) &&
               orders.length > 0 &&
               orders.map((row, pos) => {
@@ -122,9 +81,7 @@ const OrderHistory = ({ orders }) => {
                   <TableRow key={pos}>
                     <TableCell style={styles}>{orderDate}</TableCell>
                     <TableCell style={styles}>{documentId}</TableCell>
-                    <TableCell style={styles}>
-                      {(ordertotalPrice)}
-                    </TableCell>
+                    <TableCell style={styles}>{ordertotalPrice}</TableCell>
                     <TableCell style={styles}>
                       <Button
                         style={{ marginBottom: "5px" }}

@@ -7,7 +7,8 @@ import {
 } from "./cart.utils";
 
 const INITIAL_STATE = {
-  cartItems: JSON.parse(localStorage.getItem("cartItems") || []),
+  // cartItems: JSON.parse(localStorage.getItem("cartItems") || []),
+  cartItems: [],
   totalPrice: 0,
 };
 

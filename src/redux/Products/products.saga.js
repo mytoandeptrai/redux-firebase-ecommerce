@@ -35,6 +35,7 @@ export function* onAddProductStart() {
 }
 
 export function* fetchProduct({ payload }) {
+  console.log(payload)
   try {
     const products = yield handleFetchProduct(payload);
     console.log(products);

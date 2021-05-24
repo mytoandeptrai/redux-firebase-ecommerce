@@ -16,14 +16,15 @@ import Dashboard from "./pages/Dashboard";
 import Homepage from "./pages/Homepage";
 import Login from "./pages/Login";
 import Order from "./pages/Order";
+import OrderManagement from "./pages/OrderManagements";
 import Payment from "./pages/Payment";
 import ProductDetails from "./pages/ProductDetails";
 import ProductEdits from "./pages/ProductEdit";
+import ProductManagements from "./pages/ProductManagements";
 import Recovery from "./pages/Recovery";
 import Registration from "./pages/Registration";
 import Search from "./pages/Search";
 import { checkUserSession } from "./redux/User/user.actions";
-
 const App = (props) => {
   console.log(props);
   const dispatch = useDispatch();
@@ -161,11 +162,11 @@ const App = (props) => {
         <Route
           path="/order/:orderID"
           render={() => (
-            <WithAuth>
-              <DashBoardLayout>
+            <WithAdminAuth>
+              <AdminLayout>
                 <Order />
-              </DashBoardLayout>
-            </WithAuth>
+              </AdminLayout>
+            </WithAdminAuth>
           )}
         />
         <Route
@@ -180,12 +181,31 @@ const App = (props) => {
           )}
         />
         <Route
-          exact
           path="/admin/:productID"
           render={() => (
             <WithAdminAuth>
               <AdminLayout>
                 <ProductEdits />
+              </AdminLayout>
+            </WithAdminAuth>
+          )}
+        />
+        <Route
+          path="/productManagement"
+          render={() => (
+            <WithAdminAuth>
+              <AdminLayout>
+                <ProductManagements />
+              </AdminLayout>
+            </WithAdminAuth>
+          )}
+        />
+        <Route
+          path="/orderManagement"
+          render={() => (
+            <WithAdminAuth>
+              <AdminLayout>
+                <OrderManagement />
               </AdminLayout>
             </WithAdminAuth>
           )}
