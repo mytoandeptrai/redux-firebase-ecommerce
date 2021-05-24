@@ -2,22 +2,22 @@ import CKEditor from "ckeditor4-react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import LoadMore from "../../components/LoadMore";
 import {
   addProductStart,
   deleteProducts,
   fetchProductsStart,
 } from "../../redux/Products/products.action";
-import Button from "./../../components/forms/Button";
-import FormInput from "./../../components/forms/FormInput";
-import FormSelect from "./../../components/forms/FormSelect";
-import Modal from "./../../components/Modal";
+import Button from "../forms/Button";
+import FormInput from "../forms/FormInput";
+import FormSelect from "../forms/FormSelect";
+import LoadMore from "../LoadMore";
+import Modal from "../Modal";
 import "./style.scss";
 const mapState = ({ productsData }) => ({
   products: productsData.products,
 });
 
-const Admin = (props) => {
+const ProductManagement = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { products } = useSelector(mapState);
@@ -257,20 +257,4 @@ const Admin = (props) => {
   );
 };
 
-export default Admin;
-// import React from "react";
-// import { Route, Switch } from "react-router";
-// import ProductManagement from "../../components/ProductManagement/index";
-// const Admin = () => {
-//   return (
-//     <>
-//       <Switch>
-//         <Route path="/admin/productManagement">
-//           <ProductManagement />
-//         </Route>
-//       </Switch>
-//     </>
-//   );
-// };
-
-// export default Admin;
+export default ProductManagement;

@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
-import { fetchProductsStart } from "../../redux/Products/products.action";
+import {
+  fetchProductsStart,
+  sortProductByPrice,
+  sortProductBySize,
+} from "../../redux/Products/products.action";
 import FormInput from "../forms/FormInput";
 import FormSelect from "../forms/FormSelect";
 import LoadMore from "../LoadMore";
@@ -17,6 +21,8 @@ const ProductResults = ({}) => {
   const history = useHistory();
   const { filterType, searchProduct } = useParams();
   const [searchValue, setSearchValue] = useState();
+  const [size, setSize] = useState("");
+  const [price, setPrice] = useState("");
   const { data, queryDoc, isLastPage } = products;
 
   useEffect(() => {
@@ -52,6 +58,73 @@ const ProductResults = ({}) => {
         value: "womens",
       },
     ],
+  };
+
+  const configFiltersByPrice = {
+    defaultValue: price,
+    options: [
+      {
+        name: "Lastest",
+        value: "",
+      },
+      {
+        name: "Highest",
+        value: "Highest",
+      },
+      {
+        name: "Lowest",
+        value: "Lowest",
+      },
+    ],
+  };
+
+  const configFilterBySize = {
+    defaultValue: size,
+    options: [
+      {
+        name: "All",
+        value: "",
+      },
+      {
+        name: "XS",
+        value: "XS",
+      },
+      {
+        name: "S",
+        value: "S",
+      },
+      {
+        name: "X",
+        value: "X",
+      },
+      {
+        name: "M",
+        value: "M",
+      },
+      {
+        name: "XL",
+        value: "XL",
+      },
+      {
+        name: "XXL",
+        value: "XXL",
+      },
+      {
+        name: "XXXL",
+        value: "XXXL",
+      },
+    ],
+  };
+
+  const handleFilterBySize = (e) => {
+    const nextFilterSize = e.target.value;
+    setSize(nextFilterSize);
+    dispatch(sortProductBySize(nextFilterSize));
+  };
+  const handleFilterByPrice = (e) => {
+    const nextFilterPrice = e.target.value;
+    setPrice(nextFilterPrice);
+    dispatch(sortProductByPrice(nextFilterPrice));
   };
 
   const handleLoadMore = () => {
@@ -104,6 +177,11 @@ const ProductResults = ({}) => {
           />
         </form>
         <FormSelect {...configFilters} handleChange={handleFilter} />
+        <FormSelect {...configFilterBySize} handleChange={handleFilterBySize} />
+        <FormSelect
+          {...configFiltersByPrice}
+          handleChange={handleFilterByPrice}
+        />
       </div>
 
       <div className="productResults">

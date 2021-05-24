@@ -32,13 +32,16 @@ export const handleAddToCart = ({ prevCartItems, nextCartItems }) => {
 };
 
 export const handleAddToCartFromDetail = ({ prevCartItems, nextCartItems }) => {
-  const cartItemExisting = existingCartItem({ prevCartItems, nextCartItems });
+  const cartItemExisting = prevCartItems.find(
+    (cartItem) => cartItem.documentId === nextCartItems.product.documentId
+  );
   if (cartItemExisting) {
     return prevCartItems.map((cartItem) =>
-      cartItem.documentId === nextCartItems.documentId
+      cartItem.documentId === nextCartItems.product.documentId
         ? {
             ...cartItem,
             quantity: cartItem.quantity + nextCartItems.quantity,
+            size: nextCartItems.size,
           }
         : cartItem
     );

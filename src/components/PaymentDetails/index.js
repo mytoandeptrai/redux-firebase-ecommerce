@@ -52,6 +52,22 @@ const PaymentDetails = () => {
     });
   };
 
+  const resetForm = () => {
+    setBillingAddress({
+      date: "",
+      cvv: "",
+      card_number: "",
+    });
+    setShippingAddress({
+      address: "",
+      phone_number: "",
+      city: "",
+      state: "",
+      postal_code: "",
+      country: "",
+    });
+  };
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
     if (!isOnlinePayment) {
@@ -89,7 +105,8 @@ const PaymentDetails = () => {
         orderFinished: false,
       };
       dispatch(saveOrderHistory(configOrder));
-      console.log(configOrder);
+      resetForm();
+      history.push("/search");
     } else {
       if (
         !recipientName ||
@@ -130,6 +147,8 @@ const PaymentDetails = () => {
         orderFinished: false,
       };
       dispatch(saveOrderHistory(configOrder));
+      resetForm();
+      history.push("/search");
     }
   };
 

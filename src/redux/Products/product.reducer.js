@@ -1,9 +1,15 @@
+import {
+  handleFilterProductByPrice,
+  handleFilterProducts,
+} from "./product.utils";
 import productsTypes from "./products.types";
 
 const INITIAL_STATE = {
   products: [],
   product: {},
   loadingDetail: true,
+  productSortBySize: [],
+  productSortByPrice: [],
 };
 const productsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -22,10 +28,25 @@ const productsReducer = (state = INITIAL_STATE, action) => {
         ...state,
         loadingDetail: false,
       };
-    // case productsTypes.PRODUCT_SORT_BY_SIZE:
-    //   return {
-    //     ...state,
-    //   }
+    case productsTypes.PRODUCT_SORT_BY_SIZE:
+      return {
+        ...state,
+        productSortBySize: handleFilterProducts({
+          prevProductItems: state.products.data,
+          size: action.payload,
+        }),
+      };
+
+    case productsTypes.PRODUCT_SORT_BY_PRICE:
+      console.log(action.payload);
+      return {
+        ...state,
+        productSortByPrice: handleFilterProductByPrice({
+          prevProductItems: state.products.data,
+          price: action.payload,
+        }),
+      };
+
     default:
       return state;
   }

@@ -36,9 +36,9 @@ const ProductCard = () => {
 
   useEffect(() => {
     dispatch(fetchProductStart(productID));
-    return () => {
-      dispatch(setProduct({}));
-    };
+    // return () => {
+    //   dispatch(setProduct({}));
+    // };
   }, []);
 
   const handleAddClick = () => {
@@ -57,12 +57,6 @@ const ProductCard = () => {
         quantity: formValue.quantity - 1,
       });
     }
-  };
-
-  const handleAddToCart = (product) => {
-    if (!product) return;
-    dispatch(addProduct(product));
-    history.push("/cart");
   };
 
   const resetForm = () => {
@@ -131,7 +125,13 @@ const ProductCard = () => {
               )}
               <div className="productActions">
                 <button onClick={handleRemoveClick}>-</button>
-                {formValue.quantity}
+                <input
+                  type="number"
+                  value={formValue.quantity}
+                  name="quantity"
+                  onChange={handleChange}
+                />
+                {/* {formValue.quantity} */}
                 <button onClick={handleAddClick}>+</button>
               </div>
               <ProductThumb

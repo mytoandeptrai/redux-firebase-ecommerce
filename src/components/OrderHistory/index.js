@@ -14,6 +14,7 @@ import {
   deleteOrders,
   updateShippingOrder,
 } from "../../redux/Orders/order.actions";
+import formatCurrency from "../../Utils";
 import Button from "./../forms/Button/index";
 const columns = [
   {
@@ -112,7 +113,7 @@ const OrderHistory = ({ orders }) => {
                 const {
                   documentId,
                   orderCreatedDate,
-                  orderTotal,
+                  ordertotalPrice,
                   orderFinished,
                 } = row;
                 console.log(typeof orderFinished);
@@ -121,7 +122,9 @@ const OrderHistory = ({ orders }) => {
                   <TableRow key={pos}>
                     <TableCell style={styles}>{orderDate}</TableCell>
                     <TableCell style={styles}>{documentId}</TableCell>
-                    <TableCell style={styles}>{orderTotal}</TableCell>
+                    <TableCell style={styles}>
+                      {(ordertotalPrice)}
+                    </TableCell>
                     <TableCell style={styles}>
                       <Button
                         style={{ marginBottom: "5px" }}

@@ -39,7 +39,12 @@ export const productDetailSucces = () => ({
   type: productsTypes.PRODUCT_DETAIL_SUCCESS,
 });
 
-export const sortProductByPrice = (productSize) => ({
+export const sortProductBySize = (productSize) => ({
   type: productsTypes.PRODUCT_SORT_BY_SIZE,
   payload: productSize,
+});
+
+export const sortProductByPrice = (productPrice) => ({
+  type: productsTypes.PRODUCT_SORT_BY_PRICE,
+  payload: productPrice,
 });

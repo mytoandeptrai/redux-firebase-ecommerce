@@ -11,6 +11,24 @@ const INITIAL_STATE = {
   totalPrice: 0,
 };
 
+const listProductCart = []; // cái này chứa dữ liệu showw ở cart này, lưu ở reducer Cart
+const addToCart = (item) => {
+  const indexProduct = listProductCart.findIndex(
+    (itemCart) => item.documentId === itemCart.documentId
+  );
+  // kiểm tra đã có món hàng chưa
+  if (indexProduct > -1) {
+    //có rồi thì vào đây, tăng quantity
+    listProductCart[indexProduct] = {
+      ...item,
+      quantity: listProductCart[indexProduct].quantity + 1,
+    };
+  } else {
+    //chưa có thì push hàng vào, set quantity là 1
+    listProductCart.push({ ...item, quantity: 1 });
+  }
+};
+
 const cartReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case cartTypes.ADD_TO_CART:
@@ -39,19 +57,19 @@ const cartReducer = (state = INITIAL_STATE, action) => {
         }),
       };
     case cartTypes.CLEAR_CART:
+      localStorage.removeItem("cartItems");
       return {
         ...state,
         ...INITIAL_STATE,
       };
-
-    // case cartTypes.ADD_TO_CART_FROM_DETAIL:
-    //   return {
-    //     ...state,
-    //     cartItems: handleAddToCartFromDetail({
-    //       prevCartItems: state.cartItems,
-    //       nextCartItems: action.payload,
-    //     }),
-    //   };
+    case cartTypes.ADD_TO_CART_FROM_DETAIL:
+      return {
+        ...state,
+        cartItems: handleAddToCartFromDetail({
+          prevCartItems: state.cartItems,
+          nextCartItems: action.payload,
+        }),
+      };
     default:
       return state;
   }

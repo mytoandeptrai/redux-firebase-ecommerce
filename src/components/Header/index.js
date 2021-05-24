@@ -8,14 +8,11 @@ import "./style.scss";
 
 const mapState = (state) => ({
   currentUser: state.user.currentUser,
-  // totalNumberCartItems: selecdCartItemsCount(state),
+  cartItems: state.cartData.cartItems,
 });
 
 const Header = (props) => {
-  const {
-    currentUser,
-    // totalNumberCartItems
-  } = useSelector(mapState);
+  const { currentUser, cartItems } = useSelector(mapState);
   const dispatch = useDispatch();
   const signOut = () => {
     dispatch(signOutUserStart());
@@ -48,7 +45,8 @@ const Header = (props) => {
             <li>
               <Link to="/cart">
                 Your Cart
-                {/* {totalNumberCartItems} */}
+                {" "}
+                {cartItems.length}
               </Link>
             </li>
 
