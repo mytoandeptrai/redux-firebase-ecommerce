@@ -9,6 +9,10 @@ const INITIAL_STATE = {
   // resetPasswordError: [],
   userErr: [],
   resetPasswordSuccess: false,
+  users: [],
+  user: {},
+  loadingUsers: true,
+  loadingUser: true,
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -75,6 +79,28 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         ...INITIAL_STATE,
+      };
+    case userTypes.FETCH_USERS_SUCCESS: {
+      return {
+        ...state,
+        loadingUsers: false,
+      };
+    }
+    case userTypes.FETCH_USER_SUCCESS: {
+      return {
+        ...state,
+        loadingUser: false,
+      };
+    }
+    case userTypes.SET_USERS:
+      return {
+        ...state,
+        users: action.payload,
+      };
+    case userTypes.SET_USER:
+      return {
+        ...state,
+        user: action.payload,
       };
     default:
       return state;

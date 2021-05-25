@@ -10,8 +10,19 @@ import {
   signOutUserSuccess,
   userError,
   resetPasswordSuccess,
+  setUsers,
+  setUser,
+  fetchUsersSuccess,
+  fetchUsersStart,
+  fetchUserSuccess,
 } from "./user.actions";
-import { handleResetPasswordAPI } from "./user.helper";
+import {
+  handleDeleteUser,
+  handleEditUser,
+  handleFetchUser,
+  handleFetchUsers,
+  handleResetPasswordAPI,
+} from "./user.helper";
 import userTypes from "./user.types";
 
 export function* getSnapshotFromUserAuth(user, additionalData = {}) {
@@ -133,6 +144,60 @@ export function* onGoogleSignInStart() {
   yield takeLatest(userTypes.GOOGLE_SIGN_IN_START, googleSignIn);
 }
 
+export function* fetchUsers() {
+  try {
+    const users = yield handleFetchUsers();
+    yield put(fetchUsersSuccess());
+    yield put(setUsers(users));
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export function* onFetchUsersStart() {
+  yield takeLatest(userTypes.FETCH_USERS_START, fetchUsers);
+}
+
+export function* deleteUser({ payload }) {
+  try {
+    yield handleDeleteUser(payload);
+    yield put(fetchUsersStart());
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export function* onDeleteUserStart() {
+  yield takeLatest(userTypes.DELETE_USER_START, deleteUser);
+}
+
+export function* fetchUser({ payload }) {
+  try {
+    const userObject = yield handleFetchUser(payload);
+    yield put(setUser(userObject));
+    yield put(fetchUserSuccess());
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export function* onFetchUserStart() {
+  yield takeLatest(userTypes.FETCH_USER_START, fetchUser);
+}
+
+export function* editUser({ payload }) {
+  try {
+    yield handleEditUser(payload);
+    yield put(fetchUsersStart());
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export function* onEditUserStart() {
+  yield takeLatest(userTypes.EDIT_USER_START, editUser);
+}
+
 export default function* userSagas() {
   yield all([
     call(onEmailSignInStart),
@@ -141,5 +206,9 @@ export default function* userSagas() {
     call(onSignUpUserStart),
     call(onResetPasswordStart),
     call(onGoogleSignInStart),
+    call(onFetchUsersStart),
+    call(onDeleteUserStart),
+    call(onFetchUserStart),
+    call(onEditUserStart),
   ]);
 }

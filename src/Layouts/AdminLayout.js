@@ -26,6 +26,9 @@ const AdminLayout = (props) => {
                 <Link to="/orderManagement">Manage Orders</Link>
               </li>
               <li>
+                <Link to="/accountManagement">Manage Account</Link>
+              </li>
+              <li>
                 <span className="signOut" onClick={signOut}>
                   Sign Out
                 </span>

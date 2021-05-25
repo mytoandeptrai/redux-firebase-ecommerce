@@ -22,6 +22,7 @@ export const handleUserProfile = async ({ userAuth, additionalData }) => {
   const userRoles = ["user"];
   if (!snapshot.exists) {
     const { displayName, email } = userAuth;
+    const defaultImage = "https://graph.facebook.com/491658451867422/picture";
     const timestamp = new Date();
     try {
       await userRef.set({
@@ -29,6 +30,7 @@ export const handleUserProfile = async ({ userAuth, additionalData }) => {
         email,
         userRoles,
         createdAt: timestamp,
+        image: defaultImage,
         ...additionalData,
       });
     } catch (error) {

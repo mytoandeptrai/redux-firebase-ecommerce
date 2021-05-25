@@ -9,6 +9,8 @@ import AdminLayout from "./Layouts/AdminLayout";
 import DashBoardLayout from "./Layouts/DashboardLayout";
 import HomepageLayout from "./Layouts/HomepageLayout";
 import MainLayout from "./Layouts/MainLayout";
+import AccountEdits from "./pages/AccountEdits";
+import AccountManagements from "./pages/AccountManagements";
 import Admin from "./pages/Admin";
 import Cart from "./pages/Cart";
 import ContactPage from "./pages/Contact";
@@ -206,6 +208,27 @@ const App = (props) => {
             <WithAdminAuth>
               <AdminLayout>
                 <OrderManagement />
+              </AdminLayout>
+            </WithAdminAuth>
+          )}
+        />
+        <Route
+          exact
+          path="/accountManagement"
+          render={() => (
+            <WithAdminAuth>
+              <AdminLayout>
+                <AccountManagements />
+              </AdminLayout>
+            </WithAdminAuth>
+          )}
+        />
+        <Route
+          path="/accountManagement/:userID"
+          render={() => (
+            <WithAdminAuth>
+              <AdminLayout>
+                <AccountEdits />
               </AdminLayout>
             </WithAdminAuth>
           )}
