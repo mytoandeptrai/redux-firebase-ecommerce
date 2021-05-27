@@ -30,7 +30,7 @@ const AccountEdit = ({ loadingUser, user }) => {
     history.push("/accountManagement");
   };
   useEffect(() => {
-    if (loadingUser === false) {
+    if (user.displayName) {
       setDisplayName(user.displayName);
       setUserRoles(user.userRoles.join(","));
       setUserImage(user.image);
@@ -79,3 +79,108 @@ const AccountEdit = ({ loadingUser, user }) => {
 };
 
 export default AccountEdit;
+
+// const AccountEdit = ({ loadingUser, user }) => {
+//   const [displayName, setDisplayName] = useState("");
+//   const [userImage, setUserImage] = useState("");
+//   const [userRoles, setUserRoles] = useState("");
+//   const dispatch = useDispatch();
+//   const history = useHistory();
+//   const resetForm = () => {
+//     setDisplayName("");
+//     setUserRoles("");
+//     setUserImage("");
+//   };
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     dispatch(
+//       editUserStart({
+//         displayName: displayName,
+//         image: userImage,
+//         userRoles: userRoles,
+//         userID: user.documentId,
+//       })
+//     );
+//     resetForm();
+//     history.push("/accountManagement");
+//   };
+//   useEffect(() => {
+//     if (loadingUser === false) {
+//       setDisplayName(user.displayName);
+//       setUserRoles(user.userRoles.join(","));
+//       setUserImage(user.image);
+//     }
+//   }, [user]);
+
+//   const initialState = {
+//     displayName: user?.displayName,
+//     image: user?.image,
+//     userRoles: user?.userRoles,
+//   };
+
+//   return (
+//     <>
+//       {loadingUser === false ? (
+//         <>
+//           <Formik initialValues={initialState}>
+//             {(formikProps) => {
+//               const { values, errors, touched } = formikProps;
+//               return (
+//                 <form onSubmit={handleSubmit}>
+//                   <h2>Edit Account</h2>
+//                   <FastField
+//                     //props of fastField
+//                     name="displayName"
+//                     component={FormInputFormilk}
+//                     //props of components
+//                     type="text"
+//                     label="Display Name"
+//                   />
+
+//                   <FastField
+//                     //props of fastField
+//                     name="userRoles"
+//                     component={FormInputFormilk}
+//                     //props of components
+//                     type="text"
+//                     label="Roles"
+//                   />
+
+//                   <FormInput
+//                     label="Name"
+//                     type="text"
+//                     value={displayName}
+//                     handleChange={(e) => setDisplayName(e.target.value)}
+//                   />
+
+//                   <FormInput
+//                     label="Roles"
+//                     type="text"
+//                     value={userRoles}
+//                     handleChange={(e) => setUserRoles(e.target.value)}
+//                   />
+
+//                   <FileBase64
+//                     accept="image/*"
+//                     multiple={false}
+//                     type="file"
+//                     value={userImage}
+//                     onDone={({ base64 }) => setUserImage(base64)}
+//                   />
+//                   <Button type="submit">Save</Button>
+//                 </form>
+//               );
+//             }}
+//           </Formik>
+//         </>
+//       ) : (
+//         <>
+//           {" "}
+//           <p>Loading Details</p>{" "}
+//         </>
+//       )}
+//     </>
+//   );
+// };
+
+// export default AccountEdit;

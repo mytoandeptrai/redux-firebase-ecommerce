@@ -33,10 +33,8 @@ const ProductEdit = () => {
     dispatch(fetchProductStart(productID));
   }, []);
 
-  console.log(loadingDetail);
-
   useEffect(() => {
-    if (loadingDetail === false) {
+    if (product.productCategory) {
       setProductCategory(product.productCategory);
       setProductName(product.productName);
       setProductPrice(product.productPrice);

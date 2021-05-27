@@ -63,13 +63,16 @@ export function* onDeleteProductStart() {
 }
 
 export function* fetchProducts({ payload }) {
+  console.log('đặt loading chỗ ni nè')
   try {
     const product = yield handleFetchProducts(payload);
-    console.log(product);
+    console.log("🚀 ~ file: products.saga.js ~ line 68 ~ function*fetchProducts ~ product", product)
     yield put(setProduct(product));
     yield put(productDetailSucces());
   } catch (error) {
     console.log(error);
+  }finally{
+    console.log('tắt loading chỗ ni nè')
   }
 }
 
