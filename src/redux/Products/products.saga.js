@@ -18,11 +18,11 @@ import productsTypes from "./products.types";
 export function* addProduct({ payload }) {
   try {
     const timestamp = new Date();
-    console.log(auth.currentUser);
     yield handleAddProduct({
       ...payload,
       productAdminUserUID: auth.currentUser.uid,
       createdDate: timestamp,
+
     });
     yield put(fetchProductsStart());
   } catch (error) {
@@ -35,7 +35,7 @@ export function* onAddProductStart() {
 }
 
 export function* fetchProduct({ payload }) {
-  console.log(payload)
+  console.log(payload);
   try {
     const products = yield handleFetchProduct(payload);
     console.log(products);
@@ -63,16 +63,19 @@ export function* onDeleteProductStart() {
 }
 
 export function* fetchProducts({ payload }) {
-  console.log('đặt loading chỗ ni nè')
+  console.log("đặt loading chỗ ni nè");
   try {
     const product = yield handleFetchProducts(payload);
-    console.log("🚀 ~ file: products.saga.js ~ line 68 ~ function*fetchProducts ~ product", product)
+    console.log(
+      "🚀 ~ file: products.saga.js ~ line 68 ~ function*fetchProducts ~ product",
+      product
+    );
     yield put(setProduct(product));
     yield put(productDetailSucces());
   } catch (error) {
     console.log(error);
-  }finally{
-    console.log('tắt loading chỗ ni nè')
+  } finally {
+    console.log("tắt loading chỗ ni nè");
   }
 }
 

@@ -1,41 +1,35 @@
 .admin {
   padding: 0 10px;
-
-  .callToActions {
-    display: inline-block;
-    width: 100%;
-    padding: 0;
-    margin: 0 auto;
-
-    ul,
-    li {
-      margin: 0;
-      padding: 0;
-      list-style-type: none;
-    }
-
-    ul {
-      li {
-        display: inline-block;
-      }
-    }
+  margin-top: 60px;
+  background: #f1f5f9;
+  .adminTitle {
+    color: #222;
+    margin-bottom: 1rem;
   }
-}
-
-.manageProducts {
-  h1 {
-    margin-top: 1.5rem;
-  }
-
-  table.results {
-    tr {
-      &:nth-child(even) {
-        background-color: #d3d3d3;
+  .adminCards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 3rem;
+    .cardSingle {
+      background: #fff;
+      border-radius: 7px;
+      box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+      .cardBody {
+        padding: 1.3rem 1rem;
+        display: flex;
+        align-items: center;
+        .cardContent {
+          margin-left: 2rem;
+        }
       }
-
-      .thumb {
-        width: 15rem;
-        margin: 0 auto;
+      .cardFooter {
+        padding: 0.2rem 1rem;
+        background: #f9fafc;
+        p {
+          color: #027581;
+          text-transform: uppercase;
+          cursor: pointer;
+        }
       }
     }
   }

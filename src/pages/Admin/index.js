@@ -1,276 +1,82 @@
-import CKEditor from "ckeditor4-react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
-import LoadMore from "../../components/LoadMore";
-import {
-  addProductStart,
-  deleteProducts,
-  fetchProductsStart,
-} from "../../redux/Products/products.action";
-import Button from "./../../components/forms/Button";
-import FormInput from "./../../components/forms/FormInput";
-import FormSelect from "./../../components/forms/FormSelect";
-import Modal from "./../../components/Modal";
+import { useHistory } from "react-router-dom";
+import { fetchOrdersStart } from "../../redux/Orders/order.actions";
+import { fetchProductsStart } from "../../redux/Products/products.action";
+import formatCurrency from "../../Utils";
 import "./style.scss";
-const mapState = ({ productsData }) => ({
-  products: productsData.products,
+const mapState = (state) => ({
+  products: state.productsData.products,
+  orders: state.ordersData.orders,
 });
-
-const Admin = (props) => {
-  const dispatch = useDispatch();
+const Admin = () => {
+  const { products, orders } = useSelector(mapState);
+  console.log({ orders });
   const history = useHistory();
-  const { products } = useSelector(mapState);
-  const [hideModal, setHideModal] = useState(true);
-  const [productCategory, setProductCategory] = useState("mens");
-  const [productName, setProductName] = useState("");
-  const [productThumbnail, setProductThumbnail] = useState("");
-  const [productThumbnail2, setProductThumbnail2] = useState("");
-  const [productThumbnail3, setProductThumbnail3] = useState("");
-  const [size, setSize] = useState("");
-  const [productPrice, setProductPrice] = useState(0);
-  const [productDesc, setProductDesc] = useState("");
-  const { data, queryDoc, isLastPage } = products;
-
-  const toggleModal = () => setHideModal(!hideModal);
-
-  const configModal = {
-    hideModal,
-    toggleModal,
-  };
-
+  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchProductsStart());
   }, []);
-
-  const resetForm = () => {
-    setProductCategory("mens");
-    setProductName("");
-    setProductPrice(0);
-    setProductThumbnail("");
-    setProductThumbnail2("");
-    setProductThumbnail3("");
-    setSize("");
-    setHideModal(true);
-    setProductDesc("");
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(
-      addProductStart({
-        productCategory,
-        productName,
-        productThumbnails: [
-          productThumbnail,
-          productThumbnail2,
-          productThumbnail3,
-        ],
-        productSizes: size.split(","),
-        count: 1,
-        productPrice,
-        productDesc,
-      })
-    );
-    resetForm();
-  };
-
-  const handleLoadMore = () => {
-    dispatch(
-      fetchProductsStart({
-        startAfterDoc: queryDoc,
-        persistProducts: data,
-      })
-    );
-  };
-  const configLoadMore = {
-    onLoadMoreEvt: handleLoadMore,
-  };
-
+  useEffect(() => {
+    dispatch(fetchOrdersStart());
+  }, []);
+  const totalRevenue = orders.reduce((a, b) => {
+    return a + b.ordertotalPrice;
+  }, 0);
   return (
-    <div className="admin">
-      <div className="callToActions">
-        <ul>
-          <li>
-            <Button onClick={() => toggleModal()}>Add new product</Button>
-          </li>
-        </ul>
-      </div>
-
-      <Modal {...configModal}>
-        <div className="addNewProductForm">
-          <form onSubmit={handleSubmit}>
-            <h2>Add new product</h2>
-
-            <FormSelect
-              label="Category"
-              options={[
-                {
-                  value: "mens",
-                  name: "Mens",
-                },
-                {
-                  value: "womens",
-                  name: "Womens",
-                },
-              ]}
-              handleChange={(e) => setProductCategory(e.target.value)}
-            />
-
-            <FormInput
-              label="Name"
-              type="text"
-              value={productName}
-              handleChange={(e) => setProductName(e.target.value)}
-            />
-
-            <FormInput
-              label="Main image URL"
-              type="url"
-              value={productThumbnail}
-              handleChange={(e) => setProductThumbnail(e.target.value)}
-            />
-
-            <FormInput
-              label="Second main image URL"
-              type="url"
-              value={productThumbnail2}
-              handleChange={(e) => setProductThumbnail2(e.target.value)}
-            />
-
-            <FormInput
-              label="Third main image URL"
-              type="url"
-              value={productThumbnail3}
-              handleChange={(e) => setProductThumbnail3(e.target.value)}
-            />
-
-            <FormInput
-              label="Enter sizes with `,` between them"
-              type="text"
-              value={size}
-              handleChange={(e) => setSize(e.target.value)}
-            />
-
-            <FormInput
-              label="Price"
-              type="number"
-              min="0.00"
-              max="10000.00"
-              step="0.01"
-              value={productPrice}
-              handleChange={(e) => setProductPrice(e.target.value)}
-            />
-
-            <CKEditor
-              onChange={(evt) => setProductDesc(evt.editor.getData())}
-            />
-
-            <br />
-
-            <Button type="submit">Add product</Button>
-          </form>
+    <>
+      <div className="admin">
+        <h2 className="adminTitle">Overview</h2>
+        <div className="adminCards">
+          <div className="cardSingle">
+            <div className="cardBody">
+              <img
+                src="https://img.icons8.com/wired/64/000000/refund.png"
+                alt="revenue"
+              />
+              <div className="cardContent">
+                <h5>Revenue</h5>
+                <h4>{formatCurrency(totalRevenue)}</h4>
+              </div>
+            </div>
+            <div className="cardFooter">
+              <p>View All</p>
+            </div>
+          </div>
+          <div className="cardSingle">
+            <div className="cardBody">
+              <img
+                src="https://img.icons8.com/ios/50/000000/used-product.png"
+                alt="product"
+              />
+              <div className="cardContent">
+                <h5>Products</h5>
+                <h4>{products.data.length}</h4>
+              </div>
+            </div>
+            <div className="cardFooter">
+              <p onClick={() => history.push("/productManagement")}>View All</p>
+            </div>
+          </div>
+          <div className="cardSingle">
+            <div className="cardBody">
+              <img
+                src="https://img.icons8.com/pastel-glyph/64/000000/purchase-order.png"
+                alt="order"
+              />
+              <div className="cardContent">
+                <h5>Orders</h5>
+                <h4>{orders.length}</h4>
+              </div>
+            </div>
+            <div className="cardFooter">
+              <p onClick={() => history.push("/orderManagement")}>View All</p>
+            </div>
+          </div>
         </div>
-      </Modal>
-
-      <div className="manageProducts">
-        <table border="0" cellPadding="0" cellSpacing="0">
-          <tbody>
-            <tr>
-              <th>
-                <h1>Manage Products</h1>
-              </th>
-            </tr>
-            <tr>
-              <td>
-                <table
-                  className="results"
-                  border="0"
-                  cellPadding="10"
-                  cellSpacing="0"
-                >
-                  <tbody>
-                    {Array.isArray(data) &&
-                      data.length > 0 &&
-                      data.map((product, index) => {
-                        const {
-                          productName,
-                          productPrice,
-                          productThumbnails,
-                          documentId,
-                        } = product;
-
-                        return (
-                          <tr key={index}>
-                            <td>
-                              <img
-                                className="thumb"
-                                src={productThumbnails[0]}
-                                width="150rem"
-                                alt="product"
-                              />
-                            </td>
-                            <td>{productName}</td>
-                            <td>£{productPrice}</td>
-                            <td>
-                              <Button
-                                onClick={() =>
-                                  history.push(`admin/${documentId}`)
-                                }
-                              >
-                                Edit
-                              </Button>
-                            </td>
-                            <td>
-                              <Button
-                                onClick={() =>
-                                  dispatch(deleteProducts(documentId))
-                                }
-                              >
-                                Delete
-                              </Button>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                  </tbody>
-                </table>
-              </td>
-            </tr>
-            <tr>
-              <td></td>
-            </tr>
-            <tr>
-              <td>
-                <table border="0" cellPadding="10px" cellSpacing="0">
-                  <tbody>
-                    <tr>
-                      <td>{!isLastPage && <LoadMore {...configLoadMore} />}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </td>
-            </tr>
-          </tbody>
-        </table>
       </div>
-    </div>
+    </>
   );
 };
 
 export default Admin;
-// import React from "react";
-// import { Route, Switch } from "react-router";
-// import ProductManagement from "../../components/ProductManagement/index";
-// const Admin = () => {
-//   return (
-//     <>
-//       <Switch>
-//         <Route path="/admin/productManagement">
-//           <ProductManagement />
-//         </Route>
-//       </Switch>
-//     </>
-//   );
-// };
-
-// export default Admin;

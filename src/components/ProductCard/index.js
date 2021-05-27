@@ -15,7 +15,7 @@ import Button from "../forms/Button";
 import ProductSize from "./ProductSize";
 import ProductThumb from "./ProductThumb";
 import "./style.scss";
-
+import Star from "../Star";
 const mapState = (state) => ({
   product: state.productsData.product,
   loadingDetail: state.productsData.loadingDetail,
@@ -25,7 +25,13 @@ const ProductCard = () => {
   const dispatch = useDispatch();
   const { productID } = useParams();
   const { product, loadingDetail } = useSelector(mapState);
-  const { productName, productPrice, productDesc, productCount } = product;
+  const {
+    productName,
+    productPrice,
+    productDesc,
+    productCount,
+    productRating,
+  } = product;
   const myRef = createRef();
   const [index, setIndex] = useState(0);
   const [formValue, setFormValue] = useState({
@@ -108,6 +114,9 @@ const ProductCard = () => {
               <div className="productContent">
                 <h2>{productName}</h2>
                 <span>${productPrice}</span>
+              </div>
+              <div className="productStar">
+                <Star rating={productRating} />
               </div>
               <div className="productSize">
                 {product.productSizes.map((size, index) => (

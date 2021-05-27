@@ -29,6 +29,7 @@ const ProductManagement = (props) => {
   const [productThumbnail3, setProductThumbnail3] = useState("");
   const [size, setSize] = useState("");
   const [productPrice, setProductPrice] = useState(0);
+  const [productDiscount, setProductDiscount] = useState(0);
   const [productDesc, setProductDesc] = useState("");
   const { data, queryDoc, isLastPage } = products;
 
@@ -53,6 +54,7 @@ const ProductManagement = (props) => {
     setSize("");
     setHideModal(true);
     setProductDesc("");
+    setProductDiscount(0);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -67,7 +69,9 @@ const ProductManagement = (props) => {
         ],
         productSizes: size.split(","),
         count: 1,
+        productRating: [],
         productPrice,
+        productDiscount,
         productDesc,
       })
     );
@@ -111,6 +115,18 @@ const ProductManagement = (props) => {
                 {
                   value: "womens",
                   name: "Womens",
+                },
+                {
+                  value: "perfume",
+                  name: "Perfume",
+                },
+                {
+                  value: "faceWash",
+                  name: "Face Wash",
+                },
+                {
+                  value: "combo",
+                  name: "Combo",
                 },
               ]}
               handleChange={(e) => setProductCategory(e.target.value)}
@@ -159,6 +175,16 @@ const ProductManagement = (props) => {
               step="0.01"
               value={productPrice}
               handleChange={(e) => setProductPrice(e.target.value)}
+            />
+
+            <FormInput
+              label="Discount"
+              type="number"
+              min="0.00"
+              max="10000.00"
+              step="0.01"
+              value={productDiscount}
+              handleChange={(e) => setProductDiscount(e.target.value)}
             />
 
             <CKEditor
@@ -258,4 +284,3 @@ const ProductManagement = (props) => {
 };
 
 export default ProductManagement;
-
