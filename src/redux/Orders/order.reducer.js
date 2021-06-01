@@ -4,6 +4,7 @@ const INITIAL_STATE = {
   orders: [],
   orderHistory: [],
   orderDetails: [],
+  orderUserHistory: [],
 };
 const ordersReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -21,6 +22,11 @@ const ordersReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         orders: action.payload,
+      };
+    case ordersTypes.SET_USER_ORDER:
+      return {
+        ...state,
+        orderUserHistory: action.payload,
       };
     default:
       return state;

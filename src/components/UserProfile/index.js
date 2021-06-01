@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { signOutUserStart } from "../../redux/User/user.actions";
 
-const UserProfile = (props) => {
+const UserProfile = ({ currentUser }) => {
+  const { image } = currentUser;
   const dispatch = useDispatch();
   const signOut = () => {
     dispatch(signOutUserStart());
@@ -15,7 +16,7 @@ const UserProfile = (props) => {
       <ul>
         <li>
           <div className="img">
-            <img src={userIMG} alt="admin" />
+            <img src={image} alt="admin" />
           </div>
         </li>
       </ul>

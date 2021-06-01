@@ -19,6 +19,7 @@ import Homepage from "./pages/Homepage";
 import Login from "./pages/Login";
 import Order from "./pages/Order";
 import OrderManagement from "./pages/OrderManagements";
+import OrderUserManagement from "./pages/OrderUserManagement";
 import Payment from "./pages/Payment";
 import ProductDetails from "./pages/ProductDetails";
 import ProductEdits from "./pages/ProductEdit";
@@ -26,6 +27,7 @@ import ProductManagements from "./pages/ProductManagements";
 import Recovery from "./pages/Recovery";
 import Registration from "./pages/Registration";
 import Search from "./pages/Search";
+import UserAccountManagement from "./pages/UserAccountManagements";
 import { checkUserSession } from "./redux/User/user.actions";
 const App = (props) => {
   console.log(props);
@@ -149,6 +151,26 @@ const App = (props) => {
             <WithAuth>
               <DashBoardLayout>
                 <Dashboard />
+              </DashBoardLayout>
+            </WithAuth>
+          )}
+        />
+        <Route
+          path="/userAccountManagement"
+          render={() => (
+            <WithAuth>
+              <DashBoardLayout>
+                <UserAccountManagement />
+              </DashBoardLayout>
+            </WithAuth>
+          )}
+        />
+        <Route
+          path="/userOrderManagement"
+          render={() => (
+            <WithAuth>
+              <DashBoardLayout>
+                <OrderUserManagement />
               </DashBoardLayout>
             </WithAuth>
           )}

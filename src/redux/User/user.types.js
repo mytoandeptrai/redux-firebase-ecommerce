@@ -25,5 +25,6 @@ const userTypes = {
   SET_USER: "SET_USER",
   DELETE_USER_START: "DELETE_USER_START",
   EDIT_USER_START: "EDIT_USER_START",
+  EDIT_USER_FOR_USER: "EDIT_USER_FOR_USER",
 };
 export default userTypes;

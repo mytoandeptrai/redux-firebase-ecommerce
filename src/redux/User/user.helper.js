@@ -88,3 +88,21 @@ export const handleEditUser = (userData) => {
       });
   });
 };
+export const handleEditUserForCustomer = (userData) => {
+  const { displayName, userID, image } = userData;
+  return new Promise((resolve, reject) => {
+    firestore
+      .collection("users")
+      .doc(userID)
+      .update({
+        displayName: displayName,
+        image: image,
+      })
+      .then(() => {
+        resolve();
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};

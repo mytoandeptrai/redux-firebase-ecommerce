@@ -89,6 +89,11 @@ export const editUserStart = (userData) => ({
   payload: userData,
 });
 
+export const editUserForCustomer = (userData) => ({
+  type: userTypes.EDIT_USER_FOR_USER,
+  payload: userData,
+});
+
 // export const signInUser = ({ email, password }) => async (dispatch) => {
 //   try {
 //     await auth.signInWithEmailAndPassword(email, password);

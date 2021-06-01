@@ -3,10 +3,18 @@ import Button from "../../forms/Button";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../../../redux/Cart/cart.actions";
+import Star from "../../Star";
 const Product = (product) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { productThumbnails, productName, productPrice, documentId } = product;
+  const {
+    productThumbnails,
+    productName,
+    productPrice,
+    documentId,
+    productDiscount,
+    productRating,
+  } = product;
   if (
     !documentId ||
     !productThumbnails ||
@@ -39,7 +47,13 @@ const Product = (product) => {
             </span>
           </li>
           <li>
-            <span className="price">${productPrice}</span>
+            <Star rating={productRating} />
+          </li>
+          <li>
+            <div className="productPrice">
+              <span className="price">${productPrice}</span>
+              <span className="discount">${productDiscount}</span>
+            </div>
           </li>
           <li>
             <div className="addToCart">

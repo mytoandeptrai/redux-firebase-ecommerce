@@ -110,3 +110,26 @@ export const handleUpdateOrderShipping = (orderID) => {
       });
   });
 };
+
+export const handleGetOrderUser = (orderID) => {
+  return new Promise((resolve, reject) => {
+    let ref = firestore.collection("orders").orderBy("orderCreatedDate");
+    ref = ref.where("orderUserID", "==", orderID);
+    ref
+      .get()
+      .then((snap) => {
+        const data = [
+          ...snap.docs.map((doc) => {
+            return {
+              ...doc.data(),
+              documentId: doc.id,
+            };
+          }),
+        ];
+        resolve({ data });
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};

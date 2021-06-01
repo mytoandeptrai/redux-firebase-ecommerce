@@ -53,12 +53,24 @@
           line-height: 1.2;
           font-weight: 400;
         }
-
-        .price {
-          font-size: 1.6rem;
-          line-height: 1;
-          font-weight: 400;
+        .productPrice {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          .price {
+            font-size: 1.6rem;
+            line-height: 1;
+            font-weight: 400;
+          }
+          .discount {
+            font-size: 1.6rem;
+            line-height: 1;
+            font-weight: 400;
+            text-decoration: line-through;
+            color: red;
+          }
         }
+
         .addToCart {
           margin: 2rem 0 0 0;
         }

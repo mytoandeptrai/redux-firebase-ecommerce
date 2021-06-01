@@ -3,19 +3,19 @@ import { auth } from "../../firebase/utils";
 import { clearCart } from "../Cart/cart.actions";
 import {
   fetchOrdersStart,
-
   setOrderDetails,
   setOrders,
-  setUserOrderHistory
+  setOrderUser,
+  setUserOrderHistory,
 } from "./order.actions";
 import {
   handleDeleteOrder,
   handleFetchOrder,
-
   handleGetOrder,
+  handleGetOrderUser,
   handleGetUserOrderHistory,
   handleSaveOrder,
-  handleUpdateOrderShipping
+  handleUpdateOrderShipping,
 } from "./order.helper";
 import ordersTypes from "./order.types";
 
@@ -108,6 +108,18 @@ export function* onUpdateOrderShipping() {
   );
 }
 
+export function* fetchOrderUser({ payload }) {
+  try {
+    const orderUser = yield handleGetOrderUser(payload);
+    yield put(setOrderUser(orderUser.data));
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export function* onFetchOrderUserStart() {
+  yield takeLatest(ordersTypes.FETCH_USER_ORDER_START, fetchOrderUser);
+}
 
 export default function* ordersSagas() {
   yield all([
@@ -117,5 +129,6 @@ export default function* ordersSagas() {
     call(onDeleteOrder),
     call(onFetchOrdersStart),
     call(onUpdateOrderShipping),
+    call(onFetchOrderUserStart),
   ]);
 }

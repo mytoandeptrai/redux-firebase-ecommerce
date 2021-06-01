@@ -22,6 +22,7 @@ import {
   handleFetchUser,
   handleFetchUsers,
   handleResetPasswordAPI,
+  handleEditUserForCustomer,
 } from "./user.helper";
 import userTypes from "./user.types";
 
@@ -198,6 +199,19 @@ export function* onEditUserStart() {
   yield takeLatest(userTypes.EDIT_USER_START, editUser);
 }
 
+export function* editUserForCustomer({ payload }) {
+  try {
+    yield handleEditUserForCustomer(payload);
+    yield put(fetchUsersStart());
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export function* onEditUserForCustomer() {
+  yield takeLatest(userTypes.EDIT_USER_FOR_USER, editUserForCustomer);
+}
+
 export default function* userSagas() {
   yield all([
     call(onEmailSignInStart),
@@ -210,5 +224,6 @@ export default function* userSagas() {
     call(onDeleteUserStart),
     call(onFetchUserStart),
     call(onEditUserStart),
+    call(onEditUserForCustomer),
   ]);
 }

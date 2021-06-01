@@ -4,6 +4,7 @@ import "./style.scss";
 import {
   getUserOrderHistory,
   fetchOrdersStart,
+  fetchOrderUserStart,
 } from "./../../redux/Orders/order.actions";
 import OrderHistory from "../../components/OrderHistory";
 
@@ -14,18 +15,9 @@ const mapState = ({ user, ordersData }) => ({
 });
 
 const Dashboard = (props) => {
-  const dispatch = useDispatch();
-  const { currentUser, orderHistory, orders } = useSelector(mapState);
-  useEffect(() => {
-    dispatch(getUserOrderHistory(currentUser.id));
-  }, []);
-  useEffect(() => {
-    dispatch(fetchOrdersStart());
-  }, []);
   return (
     <>
-      <h1>Order History</h1>
-      <OrderHistory orders={orders} />
+      <h1>User Profile</h1>
     </>
   );
 };

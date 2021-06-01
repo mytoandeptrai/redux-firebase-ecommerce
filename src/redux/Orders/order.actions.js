@@ -44,3 +44,12 @@ export const updateShippingOrder = (orderID) => ({
   payload: orderID,
 });
 
+export const fetchOrderUserStart = (orderID) => ({
+  type: ordersTypes.FETCH_USER_ORDER_START,
+  payload: orderID,
+});
+
+export const setOrderUser = (order) => ({
+  type: ordersTypes.SET_USER_ORDER,
+  payload: order
+})
