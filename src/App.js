@@ -5,6 +5,7 @@ import AdminToolBar from "./components/AdminToolBar";
 import "./default.scss";
 import WithAdminAuth from "./hoc/withAdminAuth";
 import WithAuth from "./hoc/withAuth";
+import ScrollToTop from "./hook/ScrollToTop";
 import AdminLayout from "./Layouts/AdminLayout";
 import DashBoardLayout from "./Layouts/DashboardLayout";
 import HomepageLayout from "./Layouts/HomepageLayout";
@@ -59,6 +60,7 @@ const App = (props) => {
 
   return (
     <div className="App">
+      <ScrollToTop />
       <AdminToolBar />
       <Switch>
         <Route

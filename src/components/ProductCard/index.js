@@ -16,6 +16,8 @@ import ProductSize from "./ProductSize";
 import ProductThumb from "./ProductThumb";
 import "./style.scss";
 import Star from "../Star";
+import Review from "../Review";
+import Rate from "../Rate";
 const mapState = (state) => ({
   product: state.productsData.product,
   loadingDetail: state.productsData.loadingDetail,
@@ -74,13 +76,15 @@ const ProductCard = () => {
   };
 
   const handleAddToCartFromDetail = (product) => {
-    // if (!formValue.size || !formValue.size.quantity) return;
-    // if (!product) return;
-    const newValue = { ...formValue, product };
-    console.log(newValue);
-    dispatch(addProductFromDetail(newValue));
-    history.push("/cart");
-    resetForm();
+    if (!formValue.size || !formValue.quantity) {
+      alert("You need to choose your size and your number");
+    } else {
+      const newValue = { ...formValue, product };
+      console.log(newValue);
+      dispatch(addProductFromDetail(newValue));
+      history.push("/cart");
+      resetForm();
+    }
   };
 
   const handleChange = (e) => {
@@ -109,6 +113,7 @@ const ProductCard = () => {
           <div className="productCard">
             <div className="hero">
               <img src={product.productThumbnails[index]} alt={productName} />
+              <Review productId={productID} />
             </div>
             <div className="productDetails">
               <div className="productContent">
@@ -116,7 +121,7 @@ const ProductCard = () => {
                 <span>${productPrice}</span>
               </div>
               <div className="productStar">
-                <Star rating={productRating} />
+                <Star product={product} />
               </div>
               <div className="productSize">
                 {product.productSizes.map((size, index) => (
@@ -149,13 +154,6 @@ const ProductCard = () => {
                 handleTab={handleTab}
               />
               <div className="addToCart">
-                {/* <Button
-                  {...configAddToCartBtn}
-                  onClick={() => handleAddToCart(product)}
-                >
-                  {" "}
-                  Add to Cart
-                </Button> */}
                 <Button
                   {...configAddToCartBtn}
                   onClick={() => handleAddToCartFromDetail(product)}
@@ -163,6 +161,9 @@ const ProductCard = () => {
                   {" "}
                   Add to Cart
                 </Button>
+              </div>
+              <div className="productRating">
+                <Rate id={productID} />
               </div>
             </div>
           </div>{" "}

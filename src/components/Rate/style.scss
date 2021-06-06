@@ -1,0 +1,23 @@
+.productEvaluates {
+  h1 {
+    text-align: center;
+  }
+  .productInfo {
+    display: flex;
+    .image {
+      img {
+        border-radius: 50%;
+        object-fit: cover;
+      }
+    }
+    .comment {
+      display: flex;
+      justify-content: space-around;
+      margin-left: 20px;
+      align-items: center;
+      p {
+        margin-left: 2rem;
+      }
+    }
+  }
+}

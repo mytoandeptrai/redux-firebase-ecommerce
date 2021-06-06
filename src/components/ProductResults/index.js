@@ -50,12 +50,24 @@ const ProductResults = ({}) => {
         value: "",
       },
       {
-        name: "Mens",
         value: "mens",
+        name: "Mens",
       },
       {
-        name: "Womens",
         value: "womens",
+        name: "Womens",
+      },
+      {
+        value: "perfume",
+        name: "Perfume",
+      },
+      {
+        value: "faceWash",
+        name: "Face Wash",
+      },
+      {
+        value: "combo",
+        name: "Combo",
       },
     ],
   };

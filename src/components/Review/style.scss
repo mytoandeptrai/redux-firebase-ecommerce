@@ -1,0 +1,12 @@
+.start {
+  cursor: pointer;
+  transition: color 200ms;
+}
+input[type="radio"] {
+  display: none;
+}
+textarea {
+  width: 300px;
+  padding: 15px;
+  border: solid;
+}

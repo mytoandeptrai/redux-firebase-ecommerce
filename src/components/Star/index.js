@@ -1,16 +1,16 @@
 import React from "react";
-
-const Star = ({ rating }) => {
+import "./style.scss";
+const Star = ({ product }) => {
   const producStar = () => {
     let numArr = [];
     let numberStar;
 
-    if (rating.length <= 0) {
+    if (product?.productRating === undefined || !product?.productRating) {
       return "Không có đánh giá";
     }
 
-    if (rating.length > 0) {
-      rating.map((e) => {
+    if (product.productRating.length > 0) {
+      product?.productRating.map((e) => {
         numArr.push(parseInt(e.star));
       });
       numberStar = numArr.reduce((a, b) => a + b);

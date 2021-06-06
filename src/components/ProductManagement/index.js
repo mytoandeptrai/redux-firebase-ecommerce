@@ -69,7 +69,6 @@ const ProductManagement = (props) => {
         ],
         productSizes: size.split(","),
         count: 1,
-        productRating: [],
         productPrice,
         productDiscount,
         productDesc,

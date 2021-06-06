@@ -46,9 +46,7 @@ const Product = (product) => {
               <Link to={`/product/${documentId}`}>{productName}</Link>
             </span>
           </li>
-          <li>
-            <Star rating={productRating} />
-          </li>
+          <li>{/* <Star rating={productRating} /> */}</li>
           <li>
             <div className="productPrice">
               <span className="price">${productPrice}</span>
