@@ -8,6 +8,7 @@ import {
 import {
   fetchProductsStart,
   fetchProductStart,
+  fetchRelativeProduct,
   productDetailSucces,
   setProduct,
 } from "../../redux/Products/products.action";
@@ -18,6 +19,7 @@ import "./style.scss";
 import Star from "../Star";
 import Review from "../Review";
 import Rate from "../Rate";
+import ProductRelative from "../ProductRelative";
 const mapState = (state) => ({
   product: state.productsData.product,
   loadingDetail: state.productsData.loadingDetail,
@@ -48,6 +50,12 @@ const ProductCard = () => {
     //   dispatch(setProduct({}));
     // };
   }, []);
+
+  useEffect(() => {
+    if (product.productName) {
+      dispatch(fetchRelativeProduct(product.productCategory));
+    }
+  }, [product]);
 
   const handleAddClick = () => {
     setFormValue({
@@ -165,6 +173,7 @@ const ProductCard = () => {
               <div className="productRating">
                 <Rate id={productID} />
               </div>
+              <ProductRelative />
             </div>
           </div>{" "}
         </>

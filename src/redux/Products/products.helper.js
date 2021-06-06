@@ -176,3 +176,24 @@ export const handleEditedProduct = (product) => {
       });
   });
 };
+
+export const handleFetchRelativeProduct = (category) => {
+  return new Promise((resolve, reject) => {
+    firestore
+      .collection("products")
+      .where("productCategory", "==", category)
+      .get()
+      .then((snapshot) => {
+        const productsArray = snapshot.docs.map((doc) => {
+          return {
+            ...doc.data(),
+            documentID: doc.id,
+          };
+        });
+        resolve(productsArray);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};

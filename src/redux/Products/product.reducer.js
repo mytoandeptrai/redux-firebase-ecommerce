@@ -10,6 +10,7 @@ const INITIAL_STATE = {
   loadingDetail: true,
   productSortBySize: [],
   productSortByPrice: [],
+  productRelative: [],
 };
 const productsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -28,6 +29,11 @@ const productsReducer = (state = INITIAL_STATE, action) => {
         ...state,
         loadingDetail: false,
       };
+    case productsTypes.SET_PRODUCT_RELATIVE:
+      return {
+        ...state,
+        productRelative: action.payload,
+      };
     case productsTypes.PRODUCT_SORT_BY_SIZE:
       return {
         ...state,
@@ -38,7 +44,6 @@ const productsReducer = (state = INITIAL_STATE, action) => {
       };
 
     case productsTypes.PRODUCT_SORT_BY_PRICE:
-      console.log(action.payload);
       return {
         ...state,
         productSortByPrice: handleFilterProductByPrice({

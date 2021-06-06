@@ -48,3 +48,13 @@ export const sortProductByPrice = (productPrice) => ({
   type: productsTypes.PRODUCT_SORT_BY_PRICE,
   payload: productPrice,
 });
+
+export const fetchRelativeProduct = (category) => ({
+  type: productsTypes.FETCH_PRODUCT_RELATIVE_START,
+  payload: category,
+});
+
+export const setRelativeProduct = (productData) => ({
+  type: productsTypes.SET_PRODUCT_RELATIVE,
+  payload: productData,
+});

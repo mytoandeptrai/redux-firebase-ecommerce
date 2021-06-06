@@ -5,6 +5,7 @@ import {
   productDetailSucces,
   setProduct,
   setProducts,
+  setRelativeProduct,
 } from "./products.action";
 import {
   handleAddProduct,
@@ -12,6 +13,7 @@ import {
   handleEditedProduct,
   handleFetchProduct,
   handleFetchProducts,
+  handleFetchRelativeProduct,
 } from "./products.helper";
 import productsTypes from "./products.types";
 
@@ -22,7 +24,6 @@ export function* addProduct({ payload }) {
       ...payload,
       productAdminUserUID: auth.currentUser.uid,
       createdDate: timestamp,
-
     });
     yield put(fetchProductsStart());
   } catch (error) {
@@ -96,6 +97,22 @@ export function* onEditProductStart() {
   yield takeLatest(productsTypes.EDIT_PRODUCT_START, editProduct);
 }
 
+export function* fetchRelativeProduct({ payload }) {
+  try {
+    const productRelative = yield handleFetchRelativeProduct(payload);
+    yield put(setRelativeProduct(productRelative));
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export function* onFetchRelativeProduct() {
+  yield takeLatest(
+    productsTypes.FETCH_PRODUCT_RELATIVE_START,
+    fetchRelativeProduct
+  );
+}
+
 export default function* productsSagas() {
   yield all([
     call(onAddProductStart),
@@ -103,5 +120,6 @@ export default function* productsSagas() {
     call(onDeleteProductStart),
     call(onFetchProductStart),
     call(onEditProductStart),
+    call(onFetchRelativeProduct),
   ]);
 }

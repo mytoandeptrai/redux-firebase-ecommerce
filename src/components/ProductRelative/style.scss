@@ -1,0 +1,39 @@
+.productRelatives {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 3rem -10px 0;
+  .productInfo {
+    width: 33.33333333333333%;
+    padding: 0 10px;
+    margin: 0 auto 2rem;
+    .thumb {
+      display: block;
+      width: 100%;
+
+      img {
+        display: block;
+        width: 100%;
+        margin: 0;
+      }
+    }
+    h4 {
+    }
+    .productPrice {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      p {
+        font-size: 2.2rem;
+        line-height: 1.2;
+        font-weight: 400;
+      }
+      .discount {
+        color: gray;
+        text-decoration: line-through;
+      }
+      .price {
+        color: red;
+      }
+    }
+  }
+}
