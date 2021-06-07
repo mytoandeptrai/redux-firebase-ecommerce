@@ -49,7 +49,7 @@ const ProductCard = () => {
     // return () => {
     //   dispatch(setProduct({}));
     // };
-  }, []);
+  }, [productID]);
 
   useEffect(() => {
     if (product.productName) {
@@ -118,64 +118,68 @@ const ProductCard = () => {
       {loadingDetail === false ? (
         <>
           {" "}
-          <div className="productCard">
-            <div className="hero">
-              <img src={product.productThumbnails[index]} alt={productName} />
-              <Review productId={productID} />
-            </div>
-            <div className="productDetails">
-              <div className="productContent">
-                <h2>{productName}</h2>
-                <span>${productPrice}</span>
+          <div className="productWrapper">
+            <div className="productCard">
+              <div className="hero">
+                <img src={product.productThumbnails[index]} alt={productName} />
               </div>
-              <div className="productStar">
-                <Star product={product} />
-              </div>
-              <div className="productSize">
-                {product.productSizes.map((size, index) => (
-                  <ProductSize
-                    sizeValue={formValue.size}
-                    size={size}
-                    handleChange={handleChange}
+              <div className="productDetails">
+                <div className="productContent">
+                  <h2>{productName}</h2>
+                  <span>${productPrice}</span>
+                </div>
+                <div className="productStar">
+                  <Star product={product} />
+                </div>
+                <div className="productSize">
+                  {product.productSizes.map((size, index) => (
+                    <ProductSize
+                      sizeValue={formValue.size}
+                      size={size}
+                      handleChange={handleChange}
+                    />
+                  ))}
+                </div>
+                {productDesc ? (
+                  <span dangerouslySetInnerHTML={{ __html: productDesc }} />
+                ) : (
+                  ""
+                )}
+                <div className="productActions">
+                  <button onClick={handleRemoveClick}>-</button>
+                  <input
+                    type="number"
+                    value={formValue.quantity}
+                    name="quantity"
+                    onChange={handleChange}
                   />
-                ))}
-              </div>
-              {productDesc ? (
-                <span dangerouslySetInnerHTML={{ __html: productDesc }} />
-              ) : (
-                ""
-              )}
-              <div className="productActions">
-                <button onClick={handleRemoveClick}>-</button>
-                <input
-                  type="number"
-                  value={formValue.quantity}
-                  name="quantity"
-                  onChange={handleChange}
+                  {/* {formValue.quantity} */}
+                  <button onClick={handleAddClick}>+</button>
+                </div>
+                <ProductThumb
+                  myRef={myRef}
+                  productThumbnails={product.productThumbnails}
+                  handleTab={handleTab}
                 />
-                {/* {formValue.quantity} */}
-                <button onClick={handleAddClick}>+</button>
+                <div className="addToCart">
+                  <Button
+                    {...configAddToCartBtn}
+                    onClick={() => handleAddToCartFromDetail(product)}
+                  >
+                    {" "}
+                    Add to Cart
+                  </Button>
+                </div>
               </div>
-              <ProductThumb
-                myRef={myRef}
-                productThumbnails={product.productThumbnails}
-                handleTab={handleTab}
-              />
-              <div className="addToCart">
-                <Button
-                  {...configAddToCartBtn}
-                  onClick={() => handleAddToCartFromDetail(product)}
-                >
-                  {" "}
-                  Add to Cart
-                </Button>
-              </div>
+            </div>
+            <ProductRelative />
+            <div className="productEvaluate">
+              <Review productId={productID} />
               <div className="productRating">
                 <Rate id={productID} />
               </div>
-              <ProductRelative />
             </div>
-          </div>{" "}
+          </div>
         </>
       ) : (
         <>

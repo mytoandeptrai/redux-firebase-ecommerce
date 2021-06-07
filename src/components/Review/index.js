@@ -73,7 +73,7 @@ function Review({ productId }) {
       </div>
       <form onSubmit={formik.handleSubmit}>
         <div className="form-group ">
-          <label htmlFor="start">Chọn mức độ hài lòng</label>
+          <p htmlFor="start">Chọn mức độ hài lòng</p>
           <div>
             {[...Array(5)].map((star, i) => {
               const ratingValue = i + 1;
@@ -103,9 +103,9 @@ function Review({ productId }) {
           </div>
         </div>
         <div className="form-group">
-          <label className="title__form" htmlFor="comment">
+          <p className="title__form" htmlFor="comment">
             Viết bình luận
-          </label>
+          </p>
           <br />
           <br />
           <textarea
@@ -122,7 +122,7 @@ function Review({ productId }) {
             <div className="err">{formik.errors.comment}</div>
           ) : null}
         </div>
-        <button type="submit" className="btn btn-primary" disabled={!rating}>
+        <button type="submit" className="btn-submit" disabled={!rating}>
           Đánh giá
         </button>
       </form>

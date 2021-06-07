@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import Star from "../Star";
 import "./style.scss";
 const ProductRelative = () => {
@@ -16,7 +17,9 @@ const ProductRelative = () => {
               <div className="thumb">
                 <img src={product.productThumbnails[0]} alt="productThumnail" />
               </div>
-              <h4>{product.productName}</h4>
+              <Link to={`/product/${product.documentID}`}>
+                <h4>{product.productName}</h4>
+              </Link>
               <Star id={product.documentID} />
               <div className="productPrice">
                 <p className="discount">${product.productDiscount}</p>
